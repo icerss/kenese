@@ -1,0 +1,61 @@
+@import "./animate.css";
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #0d1a26;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
+  overflow: hidden;
+  user-select: none;
+}
+
+img {
+  pointer-events: none;
+}
+
+.krz-app {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.krz-loading-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 999999;
+  background-color: #ffffff;
+}
+
+.krz-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  position: relative;
+}
+
+.krz-loading-img {
+  width: 100px;
+}
+
+.krz-loading-text {
+  position: absolute;
+  bottom: 100px;
+  font-weight: 700;
+  font-size: 1rem;
+}
