@@ -3,6 +3,8 @@ import { APP, LOADING_CONTAINER } from "../dom";
 import { placeObject } from "../object/object";
 import debounce from "lodash/debounce";
 import { log, preFetchResources } from "../utils";
+import { addFullscreenInfo } from "./screenInfo";
+import { showDialog } from "../dialog/dialog";
 
 class Screen {
   constructor() {
@@ -92,6 +94,20 @@ class Screen {
    */
   preFetch(map) {
     return preFetchResources(map);
+  }
+
+  /**
+   * 展示全屏幕文字信息
+   */
+  fullInfo(text) {
+    return addFullscreenInfo(text);
+  }
+
+  /**
+   * 展示任务对话对话框
+   */
+  dialog(text) {
+    return showDialog(text);
   }
 }
 

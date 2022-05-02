@@ -1,0 +1,39 @@
+.krz-dialog-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.krz-dialog-model {
+  width: 90%;
+  height: 20%;
+  position: absolute;
+  bottom: 20px;
+  background-color: #ffffffd6;
+  border: #000 solid;
+  border-radius: 10px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.krz-dialog-next-icon {
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+  border-top-color: #000;
+  border-radius: 3px;
+}
+
+.krz-dialog-text {
+  position: relative;
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 0.5rem;
+  color: #000;
+  margin-left: 50px;
+  margin-top: 30px;
+}

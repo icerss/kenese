@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
 
 module.exports = {
@@ -17,7 +18,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
         test: /\.tsx?$/,
@@ -28,9 +29,9 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: "babel-loader",
-          // options: {
-          //   presets: ["@babel/preset-env"],
-          // },
+          options: {
+            plugins: ["@babel/plugin-transform-runtime"],
+          },
         },
       },
     ],
@@ -44,21 +45,12 @@ module.exports = {
       chunks: "all",
       maxInitialRequests: Infinity,
       minSize: 10000,
-      maxSize: 10000,
+      maxSize: 15000,
       minChunks: 1,
       cacheGroups: {
-        gamedata: {
-          test: /[\\/]gamedata[\\/]/,
-          filename: "[contenthash:8].game.js",
-          priority: -10,
-        },
-        renderer: {
-          test: /[\\/]node_modules[\\/]|[\\/]renderer[\\/]/,
-          filename: "[contenthash:8].renderer.js",
-          priority: -10,
-        },
         default: {
           minChunks: 2,
+          test: /[\\/]node_modules[\\/]|[\\/]gamedata[\\/]|[\\/]renderer[\\/]/,
           filename: "[contenthash:8].chunk.js",
           priority: -50,
         },
@@ -68,6 +60,9 @@ module.exports = {
   plugins: [
     new webpack.ProgressPlugin(),
     new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin({
+      filename: "[contenthash:8].chunk.css",
+    }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       inject: "body",
