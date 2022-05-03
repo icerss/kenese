@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const webpack = require("webpack");
 
 module.exports = {
@@ -18,7 +19,19 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                ident: "postcss",
+                plugins: [require("postcss-preset-env")],
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.tsx?$/,
@@ -40,6 +53,7 @@ module.exports = {
     runtimeChunk: {
       name: (entrypoint) => `runtime-${entrypoint.name}`,
     },
+    moduleIds: "deterministic",
     splitChunks: {
       automaticNameDelimiter: "-",
       chunks: "all",
@@ -48,7 +62,8 @@ module.exports = {
       maxSize: 15000,
       minChunks: 1,
       cacheGroups: {
-        default: {
+        vendor: {
+          name: "vendor",
           minChunks: 2,
           test: /[\\/]node_modules[\\/]|[\\/]gamedata[\\/]|[\\/]renderer[\\/]/,
           filename: "[contenthash:8].chunk.js",
@@ -63,6 +78,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "[contenthash:8].chunk.css",
     }),
+    new OptimizeCssAssetsPlugin(),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       inject: "body",
