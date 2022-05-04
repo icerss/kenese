@@ -1,3 +1,5 @@
+import { customAlphabet } from "nanoid";
+
 /**
  * 控制台输出
  */
@@ -11,6 +13,9 @@ function _consoleLog() {
     );
   };
 }
+/**
+ * Debug!!!!
+ */
 export const log = _consoleLog();
 window.log = log;
 
@@ -33,3 +38,8 @@ export function preFetchResources(map) {
     })
   );
 }
+
+export const nanoid = customAlphabet(
+  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+  8
+);

@@ -77,7 +77,7 @@ export function addDragEvent(krzObj) {
 
   function onmousemove(e) {
     e.preventDefault();
-    if (!isStartDrag) return;
+    if (!isStartDrag || screen.isAnimating) return;
     krzObj.classList.add("krz-item-drag");
     let nowX = e.clientX || e.changedTouches[0].pageX;
     let nowY = e.clientY || e.changedTouches[0].pageY;

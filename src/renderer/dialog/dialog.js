@@ -1,12 +1,14 @@
 import "./dialog.css";
 import { DIALOG_CONTAINER } from "../dom";
 import { log } from "../utils";
+import { screen } from "../screen/screen";
 
 /**
  * 人物对话
  */
 export function showDialog(text) {
   log("显示人物对话", { text });
+  screen.setStartAnimation();
   return new Promise(async function (resolve) {
     DIALOG_CONTAINER.innerHTML = `
 <div class="krz-dialog-model">
@@ -25,13 +27,16 @@ export function showDialog(text) {
     let box = document.querySelector(".krz-dialog-text");
     if (isRed) box.style.color = "red";
     for (let item of text) {
-      await showFullSubtitleText(box, item, {
+      await printSingleText(box, item, {
         waitTime: 30,
         isAnimate: false,
       });
     }
     setTimeout(function () {
       document.querySelector(".krz-dialog-next-icon").style.display = "block";
+      document
+        .querySelector(".krz-dialog-next-icon")
+        .classList.add("krz-animate-flicker");
     }, 100);
     document
       .querySelector(".krz-dialog-model")
@@ -39,7 +44,8 @@ export function showDialog(text) {
         setTimeout(function () {
           document.querySelector(".krz-dialog-model").remove();
           DIALOG_CONTAINER.style.display = "none";
-          resolve(void 0);
+          screen.setStopAnimation();
+          resolve();
         }, 100);
       });
   });
@@ -48,7 +54,7 @@ export function showDialog(text) {
 /**
  * 显示单字符打字机动画效果
  */
-export function showFullSubtitleText(
+export function printSingleText(
   el,
   text = "",
   config = {

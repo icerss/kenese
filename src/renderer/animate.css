@@ -45,3 +45,25 @@
 .krz-animate-pulse {
   animation: 2s ease-in-out 0s infinite pulse;
 }
+
+@keyframes flicker {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  50.1% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.krz-animate-flicker {
+  animation: 1.5s linear 0s infinite flicker;
+}

@@ -1,11 +1,13 @@
 import "./highlight.css";
 import { HIGHTLIGHT_CONTAINER } from "../dom";
 import { log } from "../utils";
+import { screen } from "../screen/screen";
 
 /**
  * 获取物品时显示的物品详情页
  */
 export function showObjectGettingHighlight(krzObj) {
+  screen.setStartAnimation();
   return new Promise(function (resolve) {
     HIGHTLIGHT_CONTAINER.innerHTML = `
 <div class="krz-object-highlight">
@@ -16,6 +18,7 @@ export function showObjectGettingHighlight(krzObj) {
     HIGHTLIGHT_CONTAINER.style.display = "block";
     HIGHTLIGHT_CONTAINER.addEventListener("click", function () {
       HIGHTLIGHT_CONTAINER.style.display = "none";
+      screen.setStopAnimation();
       resolve();
     });
 
@@ -30,6 +33,7 @@ export function showObjectGettingHighlight(krzObj) {
  * 显示物品详情页
  */
 export function showItemHighlight(krzObj) {
+  screen.setStartAnimation();
   return new Promise(function (resolve) {
     HIGHTLIGHT_CONTAINER.innerHTML = `
 <div class="krz-object-highlight">
@@ -40,6 +44,7 @@ export function showItemHighlight(krzObj) {
     HIGHTLIGHT_CONTAINER.style.display = "block";
     HIGHTLIGHT_CONTAINER.addEventListener("click", function () {
       HIGHTLIGHT_CONTAINER.style.display = "none";
+      screen.setStopAnimation();
       resolve();
     });
 

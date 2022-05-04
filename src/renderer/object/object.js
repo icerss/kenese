@@ -3,14 +3,10 @@ import {
   showObjectGettingHighlight,
   showItemHighlight,
   removeItemHighlight,
-} from "./highlight";
-import { addDragToListener, addToItemBox } from "./item";
-import { customAlphabet } from "nanoid";
-import { log } from "../utils";
-const nanoid = customAlphabet(
-  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
-  8
-);
+} from "../highlight/highlight";
+import { addDragToListener, addToItemBox } from "../item/item";
+import { log, nanoid } from "../utils";
+import { screen } from "../screen/screen";
 
 /**
  * 游戏实例物品初始化
@@ -47,18 +43,23 @@ class krzObject {
     /**
      * 是否点击时显示高亮
      */
-    if (this.isItem) {
+    if (config.description || this.isItem) {
       this.onclick(
         async function () {
-          await showObjectGettingHighlight(this);
-          addToItemBox(this);
-        }.bind(this)
-      );
-    }
-    if ((config.name || config.description) && !this.isItem) {
-      this.onclick(
-        function () {
-          showItemHighlight(this);
+          if (this.isItem) {
+            await showObjectGettingHighlight(this);
+            addToItemBox(this);
+          }
+
+          if (!config.description) return;
+
+          if (typeof this.description === "object") {
+            for (let str of this.description) {
+              await screen.dialog(str);
+            }
+          } else {
+            await screen.dialog(this.description);
+          }
         }.bind(this)
       );
     }
@@ -203,6 +204,7 @@ class krzObject {
       uid: this.uid,
     });
     return this.element.addEventListener("click", function (e) {
+      if (screen.isAnimating) return; // 若正处于动画之中，则返回
       typeof func === "function" && func(e);
     });
   }

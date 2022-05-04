@@ -3,14 +3,16 @@ import { APP, LOADING_CONTAINER } from "../dom";
 import { placeObject } from "../object/object";
 import debounce from "lodash/debounce";
 import { log, preFetchResources } from "../utils";
-import { addFullscreenInfo } from "./screenInfo";
 import { showDialog } from "../dialog/dialog";
+import { addFullscreenInfo } from "../screenInfo/screenInfo";
 
 class Screen {
   constructor() {
     this.scale = 1;
     this._handleCanvasSize();
     window.addEventListener("resize", debounce(this._handleCanvasSize, 100));
+
+    this.isAnimating = false; // 是否正处于动画或对话框任务中
 
     log("初始化屏幕");
   }
@@ -45,7 +47,7 @@ class Screen {
       width: 0,
       height: 0,
       name: "",
-      description: "",
+      description: "" || [],
       isShow: true,
       isItem: false,
     }
@@ -108,6 +110,22 @@ class Screen {
    */
   dialog(text) {
     return showDialog(text);
+  }
+
+  /**
+   * 设置处于动画之中
+   */
+  setStartAnimation() {
+    log("开始执行动画，任务挂起");
+    return (this.isAnimating = true);
+  }
+
+  /**
+   * 设置不处于动画之中
+   */
+  setStopAnimation() {
+    log("结束执行动画，任务继续");
+    return (this.isAnimating = false);
   }
 }
 

@@ -42,6 +42,7 @@ export let yaoshi = screen.place({
   y: 105,
   width: 60,
   name: "开门的钥匙",
+  description: "哦，原来钥匙放在这里啊！",
   isShow: true,
   isItem: true,
 });
@@ -51,7 +52,10 @@ export let bihua = screen.place({
   y: 90,
   width: 100,
   name: "壁画",
-  description: "一张壁画，似乎右边用螺丝锁上了",
+  description: [
+    "一张壁画，似乎右边用螺丝锁上了。",
+    "<red>看能不能找到一把螺丝刀把它打开吧</red>",
+  ],
   isShow: true,
 });
 export let doorclose = screen.place({
@@ -116,6 +120,10 @@ export let luosidao = screen.place({
   y: 321,
   width: 80,
   name: "螺丝刀",
+  description: [
+    "为什么柜子里会有一把螺丝刀？",
+    "<red>尝试将螺丝刀拖动到壁画上旋开螺丝。</red>",
+  ],
   isShow: false,
   isItem: true,
 });
@@ -125,6 +133,7 @@ export let shijuan = screen.place({
   y: 452,
   width: 25,
   name: "零分试卷",
+  description: "小时候做过的考题，现在都忘得差不多了。",
   isShow: false,
   isItem: true,
 });
@@ -134,6 +143,7 @@ export let shouji = screen.place({
   y: 503,
   width: 25,
   name: "手机",
+  description: "话说谁会把手机放在地垫下面呢？？",
   isShow: true,
   isItem: true,
 });

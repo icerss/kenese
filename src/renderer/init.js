@@ -1,3 +1,5 @@
+import "./animate.css";
+
 import S1 from "../gamedata/S1/S1";
 
 async function init() {

@@ -1,13 +1,15 @@
 import "./screenInfo.css";
 import { SCREEN_INFO_CONTAINER } from "../dom";
-import { showFullSubtitleText } from "../dialog/dialog";
+import { printSingleText } from "../dialog/dialog";
 import { log } from "../utils";
+import { screen } from "../screen/screen";
 
 /**
  * 添加全屏幕字幕
  */
 export async function addFullscreenInfo(text) {
   log("开始展示全屏幕文字", { text });
+  screen.setStartAnimation();
   return new Promise(async function (resolve) {
     SCREEN_INFO_CONTAINER.innerHTML = `
   <div class="krz-screen-info-words">
@@ -22,7 +24,7 @@ export async function addFullscreenInfo(text) {
       document.querySelector(".krz-screen-info-words-print").appendChild(box);
       sentence = sentence.split("");
       for (let item of sentence) {
-        await showFullSubtitleText(box, item, {
+        await printSingleText(box, item, {
           waitTime: 50,
         });
         if (
@@ -45,6 +47,7 @@ export async function addFullscreenInfo(text) {
             .querySelector(".krz-screen-info")
             .classList.remove("krz-animate-fadeOut");
           log("结束展示全屏幕文字");
+          screen.setStopAnimation();
           resolve();
         }, 500);
       });
