@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const WebpackObfuscator = require("webpack-obfuscator");
 const webpack = require("webpack");
 
 module.exports = {
@@ -54,12 +55,13 @@ module.exports = {
       name: (entrypoint) => `runtime-${entrypoint.name}`,
     },
     moduleIds: "deterministic",
+    chunkIds: "deterministic",
     splitChunks: {
       automaticNameDelimiter: "-",
       chunks: "all",
       maxInitialRequests: Infinity,
-      minSize: 10000,
-      maxSize: 15000,
+      minSize: 5000,
+      maxSize: 5000,
       minChunks: 1,
       cacheGroups: {
         vendor: {
@@ -79,10 +81,12 @@ module.exports = {
       filename: "[contenthash:8].chunk.css",
     }),
     new OptimizeCssAssetsPlugin(),
+    new WebpackObfuscator({
+      rotateStringArray: true,
+    }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       inject: "body",
-      scriptLoading: "defer",
     }),
   ],
 };
