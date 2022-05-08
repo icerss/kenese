@@ -7,6 +7,7 @@ import {
 import { addDragToListener, addToItemBox } from "../item/item";
 import { log, nanoid } from "../utils";
 import { screen } from "../screen/screen";
+import Promise from "promise-polyfill";
 
 /**
  * 游戏实例物品初始化
@@ -29,6 +30,7 @@ class krzObject {
     div.appendChild(image);
     document.querySelector(".krz-object-container").appendChild(div);
 
+    this.config = config;
     this.img = config.img;
     this.element = div;
     this.imageElement = image;

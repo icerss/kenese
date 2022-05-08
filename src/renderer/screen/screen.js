@@ -2,9 +2,10 @@ import "./screen.css";
 import { APP, LOADING_CONTAINER } from "../dom";
 import { placeObject } from "../object/object";
 import debounce from "lodash/debounce";
-import { log, preFetchResources } from "../utils";
+import { checkDevice, deviceIsPhone, log, preFetchResources } from "../utils";
 import { showDialog } from "../dialog/dialog";
 import { addFullscreenInfo } from "../screenInfo/screenInfo";
+import Promise from "promise-polyfill";
 
 class Screen {
   constructor() {
@@ -33,7 +34,9 @@ class Screen {
     APP.style.width = canvasWidth + "px";
     APP.style.transform = `scale(${this.scale})`;
 
-    log("调整屏幕尺寸");
+    log("调整屏幕尺寸", { scale: this.scale });
+
+    window["_krz_game_scale"] = this.scale;
   }
 
   /**
@@ -69,12 +72,12 @@ class Screen {
   /**
    * 显示加载中画面
    */
-  showLoadingAnimation() {
+  showLoadingAnimation(text) {
     LOADING_CONTAINER.innerHTML = `
 <div class="krz-loading ">
     <img class="krz-loading-img krz-animate-pulse"
         src="https://s-sh-1943-mingyan-static.oss.dogecdn.com/image/public/logo-v2/256x256.png">
-    <div class="krz-loading-text">加载资源中……</div>
+    <div class="krz-loading-text">${text ? text : "加载资源中……"}</div>
 </div>`;
     LOADING_CONTAINER.style.display = "block";
 
@@ -95,7 +98,15 @@ class Screen {
    * 预加载资源
    */
   preFetch(map) {
-    return preFetchResources(map);
+    return new Promise(
+      async function (resolve) {
+        this.showLoadingAnimation();
+        this.setStartAnimation();
+        await preFetchResources(map);
+        this.hideLoadingAnimation();
+        resolve();
+      }.bind(this)
+    );
   }
 
   /**
@@ -126,6 +137,13 @@ class Screen {
   setStopAnimation() {
     log("结束执行动画，任务继续");
     return (this.isAnimating = false);
+  }
+
+  /**
+   * 返回 Scale 值
+   */
+  getScale() {
+    return window["_krz_game_scale"] || this.scale;
   }
 }
 

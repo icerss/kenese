@@ -39,7 +39,22 @@ export function preFetchResources(map) {
   );
 }
 
+/**
+ * Nanoid
+ */
 export const nanoid = customAlphabet(
   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
   8
 );
+
+/**
+ * 看是不是手机（测试中……）
+ */
+export function deviceIsPhone() {
+  return (
+    window.innerWidth <= 480 ||
+    /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i.test(
+      navigator.userAgent
+    )
+  );
+}

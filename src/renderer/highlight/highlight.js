@@ -2,6 +2,7 @@ import "./highlight.css";
 import { HIGHTLIGHT_CONTAINER } from "../dom";
 import { log } from "../utils";
 import { screen } from "../screen/screen";
+import Promise from "promise-polyfill";
 
 /**
  * 获取物品时显示的物品详情页

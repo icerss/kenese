@@ -94,7 +94,6 @@ export function addDragEvent(krzObj) {
 
     // ==========
     for (let uid in dragDestObjList) {
-      // 比较两个 HTML 元素是否碰撞，
       // 貌似有点 bug，但是可以用[doge]
       let destObj = dragDestObjList[uid].obj;
       let dragObj = krzObj;
@@ -124,11 +123,13 @@ export function addDragEvent(krzObj) {
       let b = dragTop + dragElement.clientHeight < destBottom; // 下
 
       if (l && r && t && b) {
-        log("触碰到匹配的物品", {
-          name: destObj.name || "",
-          uid: destObj.uid,
-        });
-        typeof callbackFunc === "function" && callbackFunc();
+        setTimeout(function () {
+          log("触碰到匹配的物品", {
+            name: destObj.name || "",
+            uid: destObj.uid,
+          });
+          typeof callbackFunc === "function" && callbackFunc();
+        }, 1);
       }
     }
     // ==========

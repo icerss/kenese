@@ -60,8 +60,8 @@ module.exports = {
       automaticNameDelimiter: "-",
       chunks: "all",
       maxInitialRequests: Infinity,
-      minSize: 5000,
-      maxSize: 5000,
+      minSize: 50000,
+      maxSize: 50000,
       minChunks: 1,
       cacheGroups: {
         vendor: {

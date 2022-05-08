@@ -3,6 +3,7 @@ import { SCREEN_INFO_CONTAINER } from "../dom";
 import { printSingleText } from "../dialog/dialog";
 import { log } from "../utils";
 import { screen } from "../screen/screen";
+import Promise from "promise-polyfill";
 
 /**
  * 添加全屏幕字幕

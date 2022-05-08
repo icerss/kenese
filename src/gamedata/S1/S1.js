@@ -1,3 +1,4 @@
+import Promise from "promise-polyfill";
 import { placeObject } from "../../renderer/object/object";
 import { screen } from "../../renderer/screen/screen";
 import { Jiekebu } from "../common/character";
@@ -13,10 +14,8 @@ import {
 
 export default function S1() {
   return new Promise(async function (resolve) {
-    screen.showLoadingAnimation();
     await screen.preFetch(images);
     screen.background(images.bg);
-    screen.hideLoadingAnimation();
 
     await Jiekebu.dialog("今天又是美好的一天啊！！");
     await Jiekebu.dialog("诶？门怎么是锁的？");
