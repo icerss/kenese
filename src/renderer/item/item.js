@@ -6,7 +6,7 @@ import { log } from "../utils";
 
 /**
  * 监听拖动碰撞目标的列表
- * { $dragObj.name: $destObj }
+ * { $dragObj: $destObj }
  */
 let dragDestObjList = {};
 
@@ -63,6 +63,10 @@ export function addDragEvent(krzObj) {
   let offsetTop = 0;
   function onmousedown(e) {
     e.preventDefault();
+
+    APP.addEventListener("mousemove", onmousemove);
+    APP.addEventListener("mouseup", onmouseup);
+
     mouseX = e.clientX || e.changedTouches[0].pageX;
     mouseY = e.clientY || e.changedTouches[0].pageY;
     offsetLeft = krzObj.offsetLeft;
@@ -129,6 +133,7 @@ export function addDragEvent(krzObj) {
     }
     // ==========
   }
+
   function onmouseup(e) {
     e.preventDefault();
     if (!isStartDrag) return;
@@ -140,12 +145,14 @@ export function addDragEvent(krzObj) {
       name: "",
       uid: krzObj.getAttribute("data-id"),
     });
+
+    removeEventListener();
+  }
+
+  function removeEventListener() {
+    APP.removeEventListener("mousemove", onmousemove);
+    APP.removeEventListener("mouseup", onmouseup);
   }
 
   krzObj.addEventListener("mousedown", onmousedown);
-  krzObj.addEventListener("touchstart", onmousedown);
-  APP.addEventListener("mousemove", throttle(onmousemove, 10));
-  APP.addEventListener("touchmove", throttle(onmousemove, 10));
-  APP.addEventListener("mouseup", onmouseup);
-  APP.addEventListener("touchend", onmouseup);
 }

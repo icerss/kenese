@@ -12,7 +12,7 @@ import {
 } from "./resources";
 
 export default function S1() {
-  return new Promise(async function (next) {
+  return new Promise(async function (resolve) {
     screen.showLoadingAnimation();
     await screen.preFetch(images);
     screen.background(images.bg);
@@ -32,7 +32,7 @@ export default function S1() {
     await Jiekebu.dialog("门开了，那就准备出门吧。");
     await screen.fullInfo("测试版到此结束，请期待最终版本！！");
 
-    next();
+    resolve();
   });
 }
 

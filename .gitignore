@@ -14,3 +14,4 @@ pnpm-debug.log*
 *.sln
 *.sw?
 modules
+dist

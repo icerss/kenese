@@ -55,3 +55,12 @@ img {
   font-weight: 700;
   font-size: 1rem;
 }
+
+.krz-version {
+  position: absolute;
+  right: 5px;
+  bottom: 0;
+  color: #fff;
+  opacity: 0.7;
+  font-size: 1px;
+}

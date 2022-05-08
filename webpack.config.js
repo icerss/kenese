@@ -81,9 +81,9 @@ module.exports = {
       filename: "[contenthash:8].chunk.css",
     }),
     new OptimizeCssAssetsPlugin(),
-    new WebpackObfuscator({
-      rotateStringArray: true,
-    }),
+    // new WebpackObfuscator({
+    //   rotateStringArray: true,
+    // }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       inject: "body",
