@@ -2,7 +2,7 @@ import "./screen.css";
 import { APP, LOADING_CONTAINER } from "../dom";
 import { placeObject } from "../object/object";
 import debounce from "lodash/debounce";
-import { checkDevice, deviceIsPhone, log, preFetchResources } from "../utils";
+import { log, preFetchResources } from "../utils";
 import { showDialog } from "../dialog/dialog";
 import { addFullscreenInfo } from "../screenInfo/screenInfo";
 import Promise from "promise-polyfill";
@@ -97,7 +97,7 @@ class Screen {
   /**
    * 预加载资源
    */
-  preFetch(map) {
+  load(map) {
     return new Promise(
       async function (resolve) {
         this.showLoadingAnimation();

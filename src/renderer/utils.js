@@ -58,3 +58,44 @@ export function deviceIsPhone() {
     )
   );
 }
+
+/**
+ * 获取url参数
+ * @param {String} qs 要获取的参数名
+ */
+export function getQueryString(qs) {
+  let s = location.href;
+  s = s.replace("?", "?&").split("&");
+  let re = "";
+  for (let i = 1; i < s.length; i++) {
+    if (s[i].indexOf(qs + "=") == 0) {
+      re = s[i].replace(qs + "=", "");
+    }
+  }
+  return re;
+}
+
+/**
+ * 播放音乐
+ * @param {string} src 音乐地址
+ */
+export class AudioPlayer {
+  constructor(src) {
+    this.audio = new Audio();
+    this.audio.src = src;
+    this.audio.volume = 0.5; // 默认音量
+    this.audio.loop = true; // 默认循环
+  }
+
+  play() {
+    return this.audio.play();
+  }
+
+  pause() {
+    return this.audio.pause();
+  }
+
+  serVolume(n) {
+    return (this.audio.volume = n);
+  }
+}

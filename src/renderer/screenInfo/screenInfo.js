@@ -17,7 +17,7 @@ export async function addFullscreenInfo(text) {
       <div class="krz-screen-info-words-print"></div>
   </div>`;
     SCREEN_INFO_CONTAINER.style.display = "flex";
-    text = text.replace(/(，|。|\\n)/gi, "$1\n");
+    text = text.replace(/(，|。|,|\\n)/gi, "$1\n");
     text = text.split("\n");
     for (let sentence of text) {
       let box = document.createElement("div");

@@ -1,4 +1,14 @@
+import { I18n } from "../../renderer/i18n/i18n";
 import { screen } from "../../renderer/screen/screen";
+
+export const zh = require("./i18n/zh.json");
+export const en = require("./i18n/en.json");
+export const ja = require("./i18n/ja.json");
+
+export const $ = new I18n();
+$.load("zh", zh);
+$.load("en", en);
+$.load("ja", ja);
 
 export const images = {
   bg: "https://s-sh-1943-mingyan-static.oss.dogecdn.com/kenese%2Ftest%2F%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20190702220935.jpg",
@@ -41,8 +51,8 @@ export let yaoshi = screen.place({
   x: 430,
   y: 105,
   width: 60,
-  name: "开门的钥匙",
-  description: "哦，原来钥匙放在这里啊！",
+  name: $.t("OBJ_YAOSHI_NAME"),
+  description: $.t("OBJ_YAOSHI_DES"),
   isShow: true,
   isItem: true,
 });
@@ -51,11 +61,8 @@ export let bihua = screen.place({
   x: 406,
   y: 90,
   width: 100,
-  name: "壁画",
-  description: [
-    "一张壁画，似乎右边用螺丝锁上了。",
-    "<red>看能不能找到一把螺丝刀把它打开吧</red>",
-  ],
+  name: $.t("OBJ_BIHUA_NAME"),
+  description: [$.t("OBJ_BIHUA_DES_1"), $.t("OBJ_BIHUA_DES_2")],
   isShow: true,
 });
 export let doorclose = screen.place({
@@ -63,9 +70,8 @@ export let doorclose = screen.place({
   x: 150,
   y: 145,
   width: 150,
-  label: "doorclose",
-  name: "门",
-  description: "房间的门，似乎关得很严",
+  name: $.t("OBJ_DOOR_NAME"),
+  description: $.t("OBJ_DOOR_DES"),
   isShow: true,
 });
 export let dooropen = screen.place({
@@ -80,8 +86,8 @@ export let zhentou = screen.place({
   x: 86,
   y: 496,
   width: 80,
-  name: "睡觉的枕头",
-  description: "床上的枕头，很软很舒服！",
+  name: $.t("OBJ_ZHENTOU_NAME"),
+  description: $.t("OBJ_ZHENTOU_DES"),
   isShow: true,
 });
 export let guizi1 = screen.place({
@@ -119,11 +125,8 @@ export let luosidao = screen.place({
   x: 661,
   y: 321,
   width: 80,
-  name: "螺丝刀",
-  description: [
-    "为什么柜子里会有一把螺丝刀？",
-    "<red>尝试将螺丝刀拖动到壁画上旋开螺丝。</red>",
-  ],
+  name: $.t("OBJ_LUOSIDAO_NAME"),
+  description: [$.t("OBJ_LUOSIDAO_DES_1"), $.t("OBJ_LUOSIDAO_DES_2")],
   isShow: false,
   isItem: true,
 });
@@ -132,8 +135,8 @@ export let shijuan = screen.place({
   x: 686,
   y: 452,
   width: 25,
-  name: "零分试卷",
-  description: "小时候做过的考题，现在都忘得差不多了。",
+  name: $.t("OBJ_SHIJUAN_NAME"),
+  description: $.t("OBJ_SHIJUAN_DES"),
   isShow: false,
   isItem: true,
 });
@@ -142,8 +145,8 @@ export let shouji = screen.place({
   x: 437,
   y: 503,
   width: 25,
-  name: "手机",
-  description: "话说谁会把手机放在地垫下面呢？？",
+  name: $.t("OBJ_SHOUJI_NAME"),
+  description: $.t("OBJ_SHOUJI_DES"),
   isShow: true,
   isItem: true,
 });
