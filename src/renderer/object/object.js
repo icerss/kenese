@@ -8,6 +8,7 @@ import { addDragToListener, addToItemBox } from "../item/item";
 import { log, nanoid } from "../utils";
 import { screen } from "../screen/screen";
 import Promise from "promise-polyfill";
+import { EventBus } from "../eventbus/eventbus";
 
 /**
  * 游戏实例物品初始化
@@ -238,7 +239,16 @@ class krzObject {
           uid: this.uid,
         });
 
-        addDragToListener(this, destObj, resolve);
+        EventBus.$on(
+          `krz_ontouch_${destObj.uid}`,
+          function () {
+            log("物品拖动触碰", {
+              name: this.name || "",
+              uid: this.uid,
+            });
+            resolve();
+          }.bind(this)
+        );
       }.bind(this)
     );
   }

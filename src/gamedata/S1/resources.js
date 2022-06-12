@@ -32,16 +32,16 @@ export const images = {
 
 export let bihuaopen = screen.place({
   img: images.bihuaopen,
-  x: 343,
-  y: 80,
-  width: 120,
+  x: 646,
+  y: 160,
+  width: 240,
   isShow: false,
 });
 export let yaoshi = screen.place({
   img: images.yaoshi,
-  x: 430,
-  y: 105,
-  width: 60,
+  x: 860,
+  y: 210,
+  width: 120,
   name: $.t("OBJ_YAOSHI_NAME"),
   description: $.t("OBJ_YAOSHI_DES"),
   isShow: true,
@@ -49,73 +49,73 @@ export let yaoshi = screen.place({
 });
 export let bihua = screen.place({
   img: images.bihua,
-  x: 406,
-  y: 90,
-  width: 100,
+  x: 812,
+  y: 180,
+  width: 200,
   name: $.t("OBJ_BIHUA_NAME"),
   description: [$.t("OBJ_BIHUA_DES_1"), $.t("OBJ_BIHUA_DES_2")],
   isShow: true,
 });
 export let doorclose = screen.place({
   img: images.doorclose,
-  x: 150,
-  y: 145,
-  width: 150,
+  x: 300,
+  y: 290,
+  width: 300,
   name: $.t("OBJ_DOOR_NAME"),
   description: $.t("OBJ_DOOR_DES"),
   isShow: true,
 });
 export let dooropen = screen.place({
   img: images.dooropen,
-  x: 145,
-  y: 130,
-  height: 300,
+  x: 290,
+  y: 260,
+  height: 600,
   isShow: false,
 });
 export let zhentou = screen.place({
   img: images.zhentou,
-  x: 86,
-  y: 496,
-  width: 80,
+  x: 172,
+  y: 992,
+  width: 160,
   name: $.t("OBJ_ZHENTOU_NAME"),
   description: $.t("OBJ_ZHENTOU_DES"),
   isShow: true,
 });
 export let guizi1 = screen.place({
   img: images.guizi,
-  x: 666,
-  y: 307,
-  width: 160,
+  x: 1332,
+  y: 614,
+  width: 320,
   isShow: true,
 });
 export let guizi2 = screen.place({
   img: images.guizi,
-  x: 666,
-  y: 448,
-  width: 160,
+  x: 1332,
+  y: 896,
+  width: 320,
   isShow: true,
 });
 export let guiziopen1 = screen.place({
   img: images.guiziopen,
-  x: 625,
-  y: 303,
-  width: 206,
-  height: 139,
+  x: 1250,
+  y: 606,
+  width: 412,
+  height: 278,
   isShow: false,
 });
 export let guiziopen2 = screen.place({
   img: images.guiziopen,
-  x: 625,
-  y: 444,
-  width: 206,
-  height: 139,
+  x: 1250,
+  y: 888,
+  width: 412,
+  height: 278,
   isShow: false,
 });
 export let luosidao = screen.place({
   img: images.luosidao,
-  x: 661,
-  y: 321,
-  width: 80,
+  x: 1322,
+  y: 642,
+  width: 160,
   name: $.t("OBJ_LUOSIDAO_NAME"),
   description: [$.t("OBJ_LUOSIDAO_DES_1"), $.t("OBJ_LUOSIDAO_DES_2")],
   isShow: false,
@@ -123,9 +123,9 @@ export let luosidao = screen.place({
 });
 export let shijuan = screen.place({
   img: images.shijuan,
-  x: 686,
-  y: 452,
-  width: 25,
+  x: 1372,
+  y: 904,
+  width: 50,
   name: $.t("OBJ_SHIJUAN_NAME"),
   description: $.t("OBJ_SHIJUAN_DES"),
   isShow: false,
@@ -133,9 +133,9 @@ export let shijuan = screen.place({
 });
 export let shouji = screen.place({
   img: images.shouji,
-  x: 437,
-  y: 503,
-  width: 25,
+  x: 872,
+  y: 1006,
+  width: 50,
   name: $.t("OBJ_SHOUJI_NAME"),
   description: $.t("OBJ_SHOUJI_DES"),
   isShow: true,
@@ -143,9 +143,9 @@ export let shouji = screen.place({
 });
 export let didian = screen.place({
   img: images.didian,
-  x: 384,
-  y: 467,
-  width: 200,
+  x: 768,
+  y: 934,
+  width: 400,
   isShow: true,
 });
 
@@ -172,10 +172,10 @@ guiziopen2.onclick(function () {
 let isClickDidian = false;
 didian.onclick(async function () {
   if (!isClickDidian) {
-    didian.moveTo(null, 380, 0.4);
+    didian.moveTo(null, 760, 0.4);
     isClickDidian = true;
   } else {
-    didian.moveTo(null, 467, 0.4);
+    didian.moveTo(null, 934, 0.4);
     isClickDidian = false;
   }
 });

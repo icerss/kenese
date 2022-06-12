@@ -22,8 +22,8 @@ class Screen {
    * 处理画布大小
    */
   _handleCanvasSize() {
-    const canvasWidth = 900;
-    const canvasHeight = 600;
+    const canvasWidth = 1800;
+    const canvasHeight = 1200;
     const windiwHeight = window.innerHeight;
     const windiwWidth = window.innerWidth;
     this.scale = Math.min(
