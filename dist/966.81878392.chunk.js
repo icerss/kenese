@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk_icerss_kenese=self.webpackChunk_icerss_kenese||[]).push([[966],{7038:function(e){e.exports=JSON.parse('{"CHARACTER_JIEKEBU":"Jie Kebu","SCREEN_LOADING":"Loading resources in ......"}')}}]);

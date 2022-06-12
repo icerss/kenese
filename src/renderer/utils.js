@@ -1,4 +1,6 @@
 import { customAlphabet } from "nanoid";
+import chalk from "chalk";
+import { GameVersion } from "./init";
 
 /**
  * 控制台输出
@@ -8,7 +10,8 @@ function _consoleLog() {
   return function () {
     consoleNumber++;
     console.log(
-      `[${new Date().getHours()}:${new Date().getMinutes()}]#${consoleNumber} ->`,
+      chalk.magenta.bgCyanBright.bold(`[INFO]`),
+      ` #${consoleNumber} ->`,
       ...arguments
     );
   };
@@ -18,6 +21,14 @@ function _consoleLog() {
  */
 export const log = _consoleLog();
 window.log = log;
+
+console.log(
+  "\n %c %c %c The Lost Kenese " + " - ✰ " + "ERSS" + " ✰  %c  \n",
+  "background: #ffb700; padding:5px 0;",
+  "background: #ffb700; padding:5px 0;",
+  "color: #ffb700; background: #5755d9; padding:5px 0;",
+  "background: #ffb700; padding:5px 0;"
+);
 
 /**
  * 预加载资源

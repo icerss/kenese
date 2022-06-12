@@ -1,6 +1,5 @@
 import "./item.css";
 import { APP, ITEM_BOX } from "../dom";
-import throttle from "lodash/throttle";
 import { screen } from "../screen/screen";
 import { log } from "../utils";
 

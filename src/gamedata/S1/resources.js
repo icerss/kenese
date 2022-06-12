@@ -1,14 +1,5 @@
-import { I18n } from "../../renderer/i18n/i18n";
 import { screen } from "../../renderer/screen/screen";
-
-export const zh = require("./i18n/zh.json");
-export const en = require("./i18n/en.json");
-export const ja = require("./i18n/ja.json");
-
-export const $ = new I18n();
-$.load("zh", zh);
-$.load("en", en);
-$.load("ja", ja);
+import { $ } from "./i18n";
 
 export const images = {
   bg: "https://s-sh-1943-mingyan-static.oss.dogecdn.com/kenese%2Ftest%2F%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20190702220935.jpg",

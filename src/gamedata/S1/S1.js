@@ -1,6 +1,7 @@
 import Promise from "promise-polyfill";
 import { screen } from "../../renderer/screen/screen";
 import { Jiekebu } from "../common/character";
+import { $ } from "./i18n";
 import {
   bihua,
   bihuaopen,
@@ -9,7 +10,6 @@ import {
   images,
   luosidao,
   yaoshi,
-  $,
 } from "./resources";
 
 export default function S1() {

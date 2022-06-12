@@ -27,6 +27,8 @@ async function translate(target) {
     log("==========");
     log("开始处理：", dirname);
     const baseDirPath = `../src/gamedata/${dirname}/i18n`;
+
+    // 默认翻译原语言文件是否存在
     let isCommonFileExisting = await checkFileIsExisting(
       path.resolve(__dirname, baseDirPath),
       "zh.json"
@@ -36,11 +38,32 @@ async function translate(target) {
       log("结果：翻译源（zh.json）不存在，跳过");
       continue;
     }
+
+    // 目标待翻译语言文件是否存在
     let isTargetFileExisting = await checkFileIsExisting(
       path.resolve(__dirname, baseDirPath),
       `${target}.json`
     );
     log(`目标源（${target}.json）`, isTargetFileExisting ? "存在" : "不存在");
+
+    // index.js 是否存在
+    let isJsFileExisting = await checkFileIsExisting(
+      path.resolve(__dirname, baseDirPath),
+      "index.js"
+    );
+    if (!isJsFileExisting) {
+      log("index.js 不存在，自动补全");
+      await fs.writeFile(
+        path.resolve(__dirname, baseDirPath, "index.js"),
+        `import { I18n } from "../../../renderer/i18n/i18n";
+
+// const zh = require("./zh.json");
+      
+export const $ = new I18n();
+// $.load("zh", zh);`,
+        "utf-8"
+      );
+    }
 
     let originFile;
     let targetFile;

@@ -6,7 +6,7 @@ import { screen } from "./screen/screen";
 import * as Sentry from "@sentry/browser";
 import { BrowserTracing } from "@sentry/tracing";
 
-const GameVersion = pkg.version;
+export const GameVersion = pkg.version;
 const Gamedata = ["S1", "S2"];
 
 async function init() {

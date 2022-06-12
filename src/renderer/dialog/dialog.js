@@ -24,7 +24,6 @@ export function showDialog(text) {
       isRed = true;
       text = text.replace(/<red>(.*?)<\/red>/g, "$1");
     }
-    // 处理中英文
     text = text.split("");
     let box = document.querySelector(".krz-dialog-text");
     if (isRed) box.style.color = "red";

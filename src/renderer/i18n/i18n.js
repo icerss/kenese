@@ -1,4 +1,4 @@
-import { getQueryString } from "../utils";
+import { getQueryString, log } from "../utils";
 
 /**
  * 获取本地语言代码
@@ -46,5 +46,6 @@ export class I18n {
   use(code) {
     this.languageCode = code;
     window["_krz_game_language_code"] = code;
+    log(`i18n 使用翻译文件${code}.json`);
   }
 }
