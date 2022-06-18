@@ -11,7 +11,7 @@ import { EventBus } from "../eventBus/eventBus";
 import {
   ON_CLICK_TARGET_OBJECT,
   ON_HIDE_OBJECT_COVER,
-} from "../eventBus/event";
+} from "../eventbus/events";
 
 /**
  * 添加到物品栏

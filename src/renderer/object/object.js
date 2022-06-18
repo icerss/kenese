@@ -18,7 +18,7 @@ import { OBJECT_CONTAINER } from "../dom";
 import {
   ON_CLICK_TARGET_OBJECT,
   ON_HIDE_OBJECT_COVER,
-} from "../eventBus/event";
+} from "../eventbus/events";
 
 /**
  * 游戏实例物品初始化
