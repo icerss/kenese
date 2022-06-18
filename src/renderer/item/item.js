@@ -7,11 +7,11 @@ import {
   objectFadeToLight,
   showObjectCover,
 } from "../object/object";
-import { EventBus } from "../eventBus/eventBus";
+import { EventBus } from "../eventbus/eventbus";
 import {
   ON_CLICK_TARGET_OBJECT,
   ON_HIDE_OBJECT_COVER,
-} from "../eventBus/events";
+} from "../eventbus/event";
 
 /**
  * 添加到物品栏

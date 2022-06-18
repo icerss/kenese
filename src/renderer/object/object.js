@@ -13,12 +13,12 @@ import {
 import { log, nanoid } from "../utils";
 import { screen } from "../screen/screen";
 import Promise from "promise-polyfill";
-import { EventBus } from "../eventBus/eventBus";
+import { EventBus } from "../eventbus/eventbus";
 import { OBJECT_CONTAINER } from "../dom";
 import {
   ON_CLICK_TARGET_OBJECT,
   ON_HIDE_OBJECT_COVER,
-} from "../eventBus/events";
+} from "../eventbus/event";
 
 /**
  * 游戏实例物品初始化

@@ -4,7 +4,7 @@ import { placeObject } from "../object/object";
 import debounce from "lodash/debounce";
 import { log, preFetchResources } from "../utils";
 import { showDialog } from "../dialog/dialog";
-import { addFullscreenInfo } from "../screenInfo/screenInfo";
+import { addFullscreenInfo } from "../screeninfo/screeninfo";
 import Promise from "promise-polyfill";
 
 class Screen {
