@@ -110,3 +110,38 @@ export class AudioPlayer {
     return (this.audio.volume = n);
   }
 }
+
+/**
+ * 遍历 object 所有的key
+ * @param {object} object 要遍历的object
+ */
+export function getObjectKeys(object) {
+  let o = [];
+  for (let key in object) o.push(key);
+  return o;
+}
+
+/**
+ * 渐入
+ * @param {HTMLElement} element html
+ */
+export function fadeIn(element) {
+  element.style.display = true;
+  element.classList.add("krz-animate-fadeIn");
+  setTimeout(function () {
+    element.classList.remove("krz-animate-fadeIn");
+  }, 700);
+}
+
+/**
+ * 渐出
+ * @param {HTMLElement} element html
+ */
+export function fadeOut(element) {
+  element.style.display = true;
+  element.classList.add("krz-animate-fadeOut");
+  setTimeout(function () {
+    element.classList.remove("krz-animate-fadeOut");
+    element.style.display = "none";
+  }, 500);
+}

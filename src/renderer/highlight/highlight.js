@@ -15,6 +15,7 @@ export function showObjectGettingHighlight(krzObj) {
   <div class="krz-highlight-name">${krzObj.name}</div>
   <img class="krz-object-img-highlight" src="${krzObj.img}">
   <div class="krz-highlight-get-tip">GET!</div>
+  <div class="krz-highlight-close-tip">点击空白处以继续</div>
 </div>`;
     HIGHTLIGHT_CONTAINER.style.display = "block";
     HIGHTLIGHT_CONTAINER.addEventListener("click", function () {

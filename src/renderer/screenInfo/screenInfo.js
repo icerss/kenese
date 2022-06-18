@@ -36,21 +36,19 @@ export async function addFullscreenInfo(text) {
         }
       }
     }
-    document
-      .querySelector(".krz-screen-info")
-      .addEventListener("click", function () {
+    document.querySelector(".krz-screen-info").onclick = function () {
+      document
+        .querySelector(".krz-screen-info")
+        .classList.add("krz-animate-fadeOut");
+      setTimeout(function () {
+        SCREEN_INFO_CONTAINER.style.display = "none";
         document
           .querySelector(".krz-screen-info")
-          .classList.add("krz-animate-fadeOut");
-        setTimeout(function () {
-          SCREEN_INFO_CONTAINER.style.display = "none";
-          document
-            .querySelector(".krz-screen-info")
-            .classList.remove("krz-animate-fadeOut");
-          log("结束展示全屏幕文字");
-          screen.setStopAnimation();
-          resolve();
-        }, 500);
-      });
+          .classList.remove("krz-animate-fadeOut");
+        log("结束展示全屏幕文字");
+        screen.setStopAnimation();
+        resolve();
+      }, 500);
+    };
   });
 }

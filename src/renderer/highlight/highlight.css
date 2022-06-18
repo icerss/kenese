@@ -27,8 +27,8 @@
   position: absolute;
   color: #ffffff;
   font-weight: 900;
-  font-size: 20px;
-  top: 50px;
+  font-size: 3rem;
+  top: 100px;
   z-index: 30;
 }
 
@@ -36,7 +36,14 @@
   position: absolute;
   color: #ffffff;
   font-weight: 900;
-  font-size: 100px;
-  bottom: 0;
+  font-size: 10rem;
+  bottom: 20px;
   z-index: 30;
+}
+
+.krz-highlight-close-tip {
+  position: absolute;
+  color: #fff;
+  font-size: 1.5rem;
+  bottom: 5px;
 }

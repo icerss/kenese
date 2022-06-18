@@ -1,4 +1,3 @@
-import "./character.css";
 import { screen } from "../screen/screen";
 import { nanoid } from "../utils";
 

@@ -14,11 +14,11 @@
 .krz-screen-info-words {
   text-align: left;
   position: relative;
-  font-size: 1.5rem;
+  font-size: 3rem;
 }
 
 .krz-screen-info-text {
   font-weight: 900;
-  margin: 0.5rem;
+  margin: 1rem;
   color: #fff;
 }

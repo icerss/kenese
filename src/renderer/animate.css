@@ -13,6 +13,16 @@
   animation-duration: 0.7s;
 }
 
+.krz-animate-fadeIn-200 {
+  animation-name: fadeIn;
+  animation-duration: 0.2s;
+}
+
+.krz-animate-fadeIn-400 {
+  animation-name: fadeIn;
+  animation-duration: 0.4s;
+}
+
 @keyframes fadeOut {
   from {
     opacity: 1;
@@ -26,6 +36,16 @@
 .krz-animate-fadeOut {
   animation-name: fadeOut;
   animation-duration: 0.7s;
+}
+
+.krz-animate-fadeOut-200 {
+  animation-name: fadeOut;
+  animation-duration: 0.2s;
+}
+
+.krz-animate-fadeOut-400 {
+  animation-name: fadeOut;
+  animation-duration: 0.4s;
 }
 
 @keyframes pulse {
@@ -66,4 +86,19 @@
 
 .krz-animate-flicker {
   animation: 1.5s linear 0s infinite flicker;
+}
+
+@keyframes fadeToDark {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0.1;
+  }
+}
+
+.krz-animate-fadeToDark {
+  animation-name: fadeToDark;
+  animation-duration: 0.2s;
 }

@@ -5,6 +5,7 @@ export const HIGHTLIGHT_CONTAINER = document.querySelector(
 export const LOADING_CONTAINER = document.querySelector(
   ".krz-loading-container"
 );
+export const OBJECT_CONTAINER = document.querySelector(".krz-object-container");
 export const ITEM_BOX = document.querySelector(".krz-item-box");
 export const DIALOG_CONTAINER = document.querySelector(".krz-dialog-box");
 export const SCREEN_INFO_CONTAINER = document.querySelector(".krz-screen-info");
