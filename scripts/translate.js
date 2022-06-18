@@ -1,11 +1,11 @@
 require("dotenv").config();
 const fs = require("fs").promises;
 const path = require("path");
-const axios = require("axios");
+const deepl = require("deepl-node");
 
 const log = console.log;
-
 const DEEPL_API_KEY = process.env.DEEPL_API_KEY;
+const translator = new deepl.Translator(DEEPL_API_KEY);
 
 const COMMON_TRANSLATE = {
   en: {
@@ -17,6 +17,7 @@ const COMMON_TRANSLATE = {
 };
 
 async function translate(target) {
+  log(DEEPL_API_KEY);
   let dir = await fs.readdir(
     path.resolve(__dirname, "../src/gamedata"),
     "utf-8"
@@ -145,20 +146,12 @@ async function doTranslate(text, target) {
   if (COMMON_TRANSLATE[target][text]) {
     return COMMON_TRANSLATE[target][text];
   }
-  try {
-    let res = await axios.get(`https://api-free.deepl.com/v2/translate`, {
-      params: {
-        auth_key: DEEPL_API_KEY,
-        text,
-        source_lang: "ZH",
-        target_lang: String(target).toUpperCase(),
-      },
-    });
-    res = res.data.translations[0].text;
-    return res;
-  } catch (error) {
-    throw new Error(error);
-  }
+
+  let targetLang = String(target).toUpperCase();
+  if (targetLang === "EN") targetLang = "en-US";
+
+  let result = await translator.translateText(text, "ZH", targetLang);
+  return result.text;
 }
 
 /**

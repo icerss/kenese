@@ -4,11 +4,21 @@ import {
   showItemHighlight,
   removeItemHighlight,
 } from "../highlight/highlight";
-import { addDragToListener, addToItemBox } from "../item/item";
+import {
+  addDragToListener,
+  addToItemBox,
+  addToTouchListener,
+  removeToTouchListener,
+} from "../item/item";
 import { log, nanoid } from "../utils";
 import { screen } from "../screen/screen";
 import Promise from "promise-polyfill";
-import { EventBus } from "../eventbus/eventbus";
+import { EventBus } from "../eventBus/eventBus";
+import { OBJECT_CONTAINER } from "../dom";
+import {
+  ON_CLICK_TARGET_OBJECT,
+  ON_HIDE_OBJECT_COVER,
+} from "../eventBus/event";
 
 /**
  * 游戏实例物品初始化
@@ -42,6 +52,8 @@ class krzObject {
     this.isItem = config.isItem; // 是否可以被获取为物品
 
     this.isSelectAsItem = false; // 是否已经被选取作为物品
+
+    screen.pushToObjects(this.uid);
 
     /**
      * 是否点击时显示高亮
@@ -239,10 +251,15 @@ class krzObject {
           uid: this.uid,
         });
 
+        addToTouchListener(this, destObj);
+
         EventBus.$on(
-          `krz_ontouch_${destObj.uid}`,
-          function () {
-            log("物品拖动触碰", {
+          ON_CLICK_TARGET_OBJECT,
+          function (data) {
+            if (data.uid !== destObj.uid) return;
+            removeToTouchListener(this);
+
+            log("目标物体点击", {
               name: this.name || "",
               uid: this.uid,
             });
@@ -284,4 +301,58 @@ class krzObject {
 
 export function placeObject(config) {
   return new krzObject(config);
+}
+
+/**
+ * 物品强显示
+ * @param {string} uid uid
+ */
+export function objectFadeToLight(uid) {
+  showObjectCover();
+  document
+    .querySelector(`.krz-object[data-id='${uid}']`)
+    .classList.add("krz-object-top");
+}
+
+/**
+ * 是否已经显示黑幕
+ */
+export let isShowObjectCover = false;
+
+/**
+ * 显示黑幕
+ */
+export function showObjectCover() {
+  if (isShowObjectCover || screen.isAnimating) return;
+  screen.setStartAnimation();
+  let div = document.createElement("div");
+  div.className = "krz-object-cover";
+  div.innerHTML = `<div class="krz-object-cover-close-tip">请选择目标物品或点击空白处关闭</div>`;
+  OBJECT_CONTAINER.insertBefore(div, document.querySelector(".krz-object"));
+  div.classList.add("krz-animate-fadeIn-200");
+  setTimeout(function () {
+    div.classList.remove("krz-animate-fadeIn-200");
+  }, 700);
+  isShowObjectCover = true;
+
+  div.onclick = hideObjectCover;
+}
+
+/**
+ * 隐藏黑幕
+ */
+export function hideObjectCover() {
+  const Cover = document.querySelector(".krz-object-cover");
+  Cover.classList.add("krz-animate-fadeOut-400");
+  EventBus.$emit(ON_HIDE_OBJECT_COVER);
+  setTimeout(function () {
+    Cover.remove();
+    isShowObjectCover = false;
+    // 取消全部元素置顶
+    for (let element of document.querySelectorAll(".krz-object-top")) {
+      element.classList.remove("krz-object-top");
+      element.classList.remove("krz-object-pointer");
+    }
+    screen.setStopAnimation();
+  }, 350);
 }

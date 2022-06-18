@@ -10,7 +10,7 @@
 
   "OBJ_BIHUA_NAME": "壁画",
   "OBJ_BIHUA_DES_1": "一张壁画，似乎右边用螺丝锁上了。",
-  "OBJ_BIHUA_DES_2": "<red>看能不能找到一把螺丝刀把它打开吧</red>",
+  "OBJ_BIHUA_DES_2": "<red>看能不能找到一把螺丝刀把它打开吧。</red>",
 
   "OBJ_DOOR_NAME": "门",
   "OBJ_DOOR_DES": "房间的门，似乎关得很严。",
@@ -20,7 +20,7 @@
 
   "OBJ_LUOSIDAO_NAME": "螺丝刀",
   "OBJ_LUOSIDAO_DES_1": "为什么柜子里会有一把螺丝刀？",
-  "OBJ_LUOSIDAO_DES_2": "<red>尝试将螺丝刀拖动到壁画上旋开螺丝。</red>",
+  "OBJ_LUOSIDAO_DES_2": "<red>尝试点击螺丝刀后点击壁画来旋开螺丝。</red>",
 
   "OBJ_SHIJUAN_NAME": "零分试卷",
   "OBJ_SHIJUAN_DES": "小时候做过的考题，现在都忘得差不多了。",

@@ -15,6 +15,8 @@ class Screen {
 
     this.isAnimating = false; // 是否正处于动画或对话框任务中
 
+    this.objects = [];
+
     log("初始化屏幕");
   }
 
@@ -74,7 +76,7 @@ class Screen {
    */
   showLoadingAnimation(text) {
     LOADING_CONTAINER.innerHTML = `
-<div class="krz-loading ">
+<div class="krz-loading">
     <img class="krz-loading-img krz-animate-pulse"
         src="https://s-sh-1943-mingyan-static.oss.dogecdn.com/image/public/logo-v2/256x256.png">
     <div class="krz-loading-text">${text ? text : "加载资源中……"}</div>
@@ -144,6 +146,13 @@ class Screen {
    */
   getScale() {
     return window["_krz_game_scale"] || this.scale;
+  }
+
+  /**
+   * this.objects.push(data)
+   */
+  pushToObjects(data) {
+    return this.objects.push(data);
   }
 }
 

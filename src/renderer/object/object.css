@@ -10,3 +10,35 @@
   z-index: 15;
   /* cursor: pointer; */
 }
+
+.krz-object-dark {
+  opacity: 0.1;
+}
+
+.krz-object-top {
+  opacity: 1;
+  z-index: 999999999;
+}
+
+.krz-object-cover {
+  background-color: #000000d6;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  cursor: pointer;
+}
+
+.krz-object-pointer {
+  cursor: pointer;
+}
+
+.krz-object-cover-close-tip {
+  position: absolute;
+  color: #fff;
+  font-size: 1.5rem;
+  bottom: 5px;
+}

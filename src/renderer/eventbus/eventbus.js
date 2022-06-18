@@ -19,12 +19,21 @@ class eventBus {
   }
 
   /**
+   * 取消订阅事件
+   * @param {string} name 时间名
+   * @param {function} callback 回调函数
+   */
+  $off(name) {
+    delete this.callback[name];
+  }
+
+  /**
    * 执行事件
    * @param {string} name 事件名
    * @param {any} data 数据
    */
   $emit(name, data) {
-    console.log(chalk.bgRedBright.white("[EventBus]"), `${name}: ${data}`);
+    console.log(chalk.bgRedBright.white("[EventBus]"), `${name}: `, data);
     if (!this.callback[name]) return;
     this.callback[name].forEach(function (func) {
       func(data);
