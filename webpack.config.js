@@ -12,6 +12,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "./dist"),
     filename: "[contenthash:8].chunk.js",
+    publicPath: "https://s-sh-1943-kenese.oss.dogecdn.com/public/",
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
