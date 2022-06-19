@@ -1,12 +1,10 @@
 require("dotenv").config();
 const fs = require("fs").promises;
 const path = require("path");
-const deepl = require("deepl-node");
+const axios = require("axios");
 
 const log = console.log;
 const DEEPL_API_KEY = process.env.DEEPL_API_KEY;
-const translator = new deepl.Translator(DEEPL_API_KEY);
-
 const COMMON_TRANSLATE = {
   en: {
     解恪布: "Jie Kebu",
@@ -148,9 +146,16 @@ async function doTranslate(text, target) {
   }
 
   let targetLang = String(target).toUpperCase();
-  if (targetLang === "EN") targetLang = "en-US";
+  if (targetLang === "EN") targetLang = "EN-US";
 
-  let result = await translator.translateText(text, "ZH", targetLang);
+  let result = await axios.get("https://api-free.deepl.com/v2/translate", {
+    params: {
+      auth_key: DEEPL_API_KEY,
+      text,
+      target_lang: targetLang,
+      source_lang: "ZH",
+    },
+  });
   return result.text;
 }
 

@@ -1,6 +1,6 @@
+import Promise from "promise-polyfill";
 import { customAlphabet } from "nanoid";
 import chalk from "chalk";
-import { GameVersion } from "./init";
 
 /**
  * 控制台输出

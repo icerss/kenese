@@ -1,8 +1,8 @@
+import Promise from "promise-polyfill";
 import "./dialog.css";
 import { DIALOG_CONTAINER } from "../dom";
 import { log } from "../utils";
 import { screen } from "../screen/screen";
-import Promise from "promise-polyfill";
 
 /**
  * 人物对话

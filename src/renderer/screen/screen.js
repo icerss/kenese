@@ -106,6 +106,7 @@ class Screen {
         this.setStartAnimation();
         await preFetchResources(map);
         this.hideLoadingAnimation();
+        this.setStopAnimation();
         resolve();
       }.bind(this)
     );

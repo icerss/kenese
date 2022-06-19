@@ -1,18 +1,17 @@
 import "./object.css";
+import Promise from "promise-polyfill";
 import {
   showObjectGettingHighlight,
   showItemHighlight,
   removeItemHighlight,
 } from "../highlight/highlight";
 import {
-  addDragToListener,
   addToItemBox,
   addToTouchListener,
   removeToTouchListener,
 } from "../item/item";
 import { log, nanoid } from "../utils";
 import { screen } from "../screen/screen";
-import Promise from "promise-polyfill";
 import { EventBus } from "../eventbus/eventbus";
 import { OBJECT_CONTAINER } from "../dom";
 import {
@@ -322,12 +321,12 @@ export let isShowObjectCover = false;
 /**
  * 显示黑幕
  */
-export function showObjectCover() {
+export function showObjectCover(text) {
   if (isShowObjectCover || screen.isAnimating) return;
   screen.setStartAnimation();
   let div = document.createElement("div");
   div.className = "krz-object-cover";
-  div.innerHTML = `<div class="krz-object-cover-close-tip">请选择目标物品或点击空白处关闭</div>`;
+  div.innerHTML = `<div class="krz-object-cover-close-tip">${text}</div>`;
   OBJECT_CONTAINER.insertBefore(div, document.querySelector(".krz-object"));
   div.classList.add("krz-animate-fadeIn-200");
   setTimeout(function () {

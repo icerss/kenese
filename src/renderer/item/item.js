@@ -48,6 +48,11 @@ let watiToListerTouch = {};
  */
 export function addToTouchListener(fromObj, toObj) {
   watiToListerTouch[fromObj.uid] = toObj.uid;
+
+  log("添加物品到监听点击列表", {
+    name: toObj.name,
+    uid: toObj.uid,
+  });
 }
 
 /**
@@ -65,8 +70,8 @@ export function removeToTouchListener(fromObj) {
 function addItemClickEvent(element) {
   const uid = element.getAttribute("data-id");
   element.onclick = function () {
-    showObjectCover();
     if (watiToListerTouch[uid]) {
+      showObjectCover("请选择目标物品，或点击空白处关闭");
       objectFadeToLight(watiToListerTouch[uid]);
       let targetElement = document.querySelector(
         `.krz-object[data-id='${watiToListerTouch[uid]}']`
@@ -84,6 +89,8 @@ function addItemClickEvent(element) {
       EventBus.$on(ON_HIDE_OBJECT_COVER, function () {
         targetElement.removeEventListener("click", onTargetElementClick);
       });
+    } else {
+      showObjectCover("暂无可操作物品，点击空白处关闭");
     }
   };
 }
