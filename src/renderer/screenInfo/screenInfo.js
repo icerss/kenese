@@ -4,6 +4,7 @@ import { SCREEN_INFO_CONTAINER } from "../dom";
 import { printSingleText } from "../dialog/dialog";
 import { log } from "../utils";
 import { screen } from "../screen/screen";
+import { m, render } from "million";
 
 /**
  * 添加全屏幕字幕
@@ -12,10 +13,10 @@ export async function addFullscreenInfo(text) {
   log("开始展示全屏幕文字", { text });
   screen.setStartAnimation();
   return new Promise(async function (resolve) {
-    SCREEN_INFO_CONTAINER.innerHTML = `
-  <div class="krz-screen-info-words">
-      <div class="krz-screen-info-words-print"></div>
-  </div>`;
+    let v = m("div", { class: "krz-screen-info-words" }, [
+      m("div", { class: "krz-screen-info-words-print" }, []),
+    ]);
+    render(SCREEN_INFO_CONTAINER, v);
     SCREEN_INFO_CONTAINER.style.display = "flex";
     text = text.replace(/(，|。|,|\\n)/gi, "$1\n");
     text = text.split("\n");

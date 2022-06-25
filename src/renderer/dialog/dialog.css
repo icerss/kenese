@@ -38,6 +38,10 @@
   margin-top: 60px;
   /* margin-left: 100px; */
 }
+
+.krz-dialog-text-red {
+  color: red;
+}
 /* 
 .krz-dialog-character {
   position: absolute;

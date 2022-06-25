@@ -16,3 +16,4 @@ pnpm-debug.log*
 *.sw?
 modules
 .vercel
+dist/*

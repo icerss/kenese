@@ -7,23 +7,21 @@ import {
   objectFadeToLight,
   showObjectCover,
 } from "../object/object";
-import { EventBus } from "../eventbus/eventbus";
+import { EventBus } from "../eventBus/eventBus";
 import {
   ON_CLICK_TARGET_OBJECT,
   ON_HIDE_OBJECT_COVER,
-} from "../eventbus/event";
+} from "../eventBus/event";
+import { createElement, m } from "million";
 
 /**
  * 添加到物品栏
  */
 export function addToItemBox(krzObj) {
-  let div = document.createElement("div");
-  div.className = "krz-item";
-  div.setAttribute("data-id", krzObj.uid);
-  let image = new Image();
-  image.src = krzObj.img;
-  image.className = "krz-item-img";
-  div.appendChild(image);
+  let v = m("div", { class: "krz-item", "data-id": krzObj.uid }, [
+    m("img", { class: "krz-item-img", src: krzObj.img }),
+  ]);
+  let div = createElement(v);
   ITEM_BOX.appendChild(div);
 
   addItemClickEvent(div);

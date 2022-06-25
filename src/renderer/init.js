@@ -9,6 +9,9 @@ import { BrowserTracing } from "@sentry/tracing";
 export const GameVersion = pkg.version;
 const Gamedata = ["S1", "S2"];
 
+export const emptyImage =
+  "data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw==";
+
 async function init() {
   if (deviceIsPhone()) {
     return screen.showLoadingAnimation("请使用电脑访问");

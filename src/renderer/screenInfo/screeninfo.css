@@ -1,0 +1,24 @@
+.krz-screen-info {
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background-color: #000c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.krz-screen-info-words {
+  text-align: left;
+  position: relative;
+  font-size: 3rem;
+}
+
+.krz-screen-info-text {
+  font-weight: 900;
+  margin: 1rem;
+  color: #fff;
+}

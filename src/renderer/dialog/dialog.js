@@ -3,6 +3,7 @@ import "./dialog.css";
 import { DIALOG_CONTAINER } from "../dom";
 import { log } from "../utils";
 import { screen } from "../screen/screen";
+import { m, patch, render, style } from "million";
 
 /**
  * 人物对话
@@ -10,14 +11,20 @@ import { screen } from "../screen/screen";
 export function showDialog(text) {
   log("显示人物对话", { text });
   screen.setStartAnimation();
+  if (document.querySelector(".krz-dialog-words-group")) {
+    document.querySelector(".krz-dialog-text").innerHTML = "";
+  }
   return new Promise(async function (resolve) {
-    DIALOG_CONTAINER.innerHTML = `
-<div class="krz-dialog-model">
-    <div class="krz-dialog-words-group">
-        <div class="krz-dialog-text"></div>
-    </div>
-    <div class="krz-dialog-next-icon" style="display: none;"></div>
-</div>`;
+    let textVNode = m("div", { class: "krz-dialog-text", key: text }, []);
+    let v = m("div", { class: "krz-dialog-model" }, [
+      m("div", { class: "krz-dialog-words-group" }, [textVNode]),
+      m(
+        "div",
+        { class: "krz-dialog-next-icon", style: style({ display: "none" }) },
+        []
+      ),
+    ]);
+    render(DIALOG_CONTAINER, v);
     DIALOG_CONTAINER.style.display = "flex";
     let isRed = false;
     if (/<red>(.*?)<\/red>/.test(text)) {
@@ -26,7 +33,11 @@ export function showDialog(text) {
     }
     text = text.split("");
     let box = document.querySelector(".krz-dialog-text");
-    if (isRed) box.style.color = "red";
+    if (isRed) {
+      box.classList.add("krz-dialog-text-red");
+    } else {
+      box.classList.remove("krz-dialog-text-red");
+    }
     for (let item of text) {
       await printSingleText(box, item, {
         waitTime: 30,
@@ -39,16 +50,15 @@ export function showDialog(text) {
         .querySelector(".krz-dialog-next-icon")
         .classList.add("krz-animate-flicker");
     }, 100);
-    document
-      .querySelector(".krz-dialog-model")
-      .addEventListener("click", function () {
-        setTimeout(function () {
-          document.querySelector(".krz-dialog-model").remove();
-          DIALOG_CONTAINER.style.display = "none";
-          screen.setStopAnimation();
-          resolve();
-        }, 100);
-      });
+    document.querySelector(".krz-dialog-model").onclick = function () {
+      setTimeout(function () {
+        DIALOG_CONTAINER.style.display = "none";
+        screen.setStopAnimation();
+        document.querySelector(".krz-dialog-model").onclick = null;
+        document.querySelector(".krz-dialog-next-icon").style.display = "none";
+        resolve();
+      }, 100);
+    };
   });
 }
 

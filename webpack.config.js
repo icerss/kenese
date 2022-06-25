@@ -12,7 +12,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "./dist"),
     filename: "[contenthash:8].chunk.js",
-    publicPath: "https://s-sh-1943-kenese.oss.dogecdn.com/public/",
+    // publicPath: "https://s-sh-1943-kenese.oss.dogecdn.com/public/",
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
@@ -34,10 +34,6 @@ module.exports = {
             },
           },
         ],
-      },
-      {
-        test: /\.tsx?$/,
-        loader: "ts-loader",
       },
       {
         test: /\.m?js$/,
@@ -82,9 +78,9 @@ module.exports = {
       filename: "[contenthash:8].chunk.css",
     }),
     new OptimizeCssAssetsPlugin(),
-    new WebpackObfuscator({
-      rotateStringArray: true,
-    }),
+    // new WebpackObfuscator({
+    //   rotateStringArray: true,
+    // }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       inject: "body",

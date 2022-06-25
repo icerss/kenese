@@ -6,6 +6,7 @@ import { log, preFetchResources } from "../utils";
 import { showDialog } from "../dialog/dialog";
 import { addFullscreenInfo } from "../screeninfo/screeninfo";
 import Promise from "promise-polyfill";
+import { m, render } from "million";
 
 class Screen {
   constructor() {
@@ -75,12 +76,14 @@ class Screen {
    * 显示加载中画面
    */
   showLoadingAnimation(text) {
-    LOADING_CONTAINER.innerHTML = `
-<div class="krz-loading">
-    <img class="krz-loading-img krz-animate-pulse"
-        src="https://s-sh-1943-mingyan-static.oss.dogecdn.com/image/public/logo-v2/256x256.png">
-    <div class="krz-loading-text">${text ? text : "加载资源中……"}</div>
-</div>`;
+    let v = m("div", { class: "krz-loading" }, [
+      m("img", {
+        class: "krz-loading-img krz-animate-pulse",
+        src: "https://s-sh-1943-mingyan-static.oss.dogecdn.com/image/public/logo-v2/256x256.png",
+      }),
+      m("div", { class: "krz-loading-text" }, [text ? text : "加载资源中……"]),
+    ]);
+    render(LOADING_CONTAINER, v);
     LOADING_CONTAINER.style.display = "block";
 
     log("显示加载中页面");

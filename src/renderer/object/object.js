@@ -12,12 +12,13 @@ import {
 } from "../item/item";
 import { log, nanoid } from "../utils";
 import { screen } from "../screen/screen";
-import { EventBus } from "../eventbus/eventbus";
+import { EventBus } from "../eventBus/eventBus";
 import { OBJECT_CONTAINER } from "../dom";
 import {
   ON_CLICK_TARGET_OBJECT,
   ON_HIDE_OBJECT_COVER,
-} from "../eventbus/event";
+} from "../eventBus/event";
+import { className, createElement, Flags, m, style } from "million";
 
 /**
  * 游戏实例物品初始化
@@ -26,18 +27,33 @@ class krzObject {
   constructor(config) {
     this.uid = nanoid(); // 唯一ID
 
-    const div = document.createElement("div");
-    const image = new Image();
-    div.className = "krz-object";
-    div.style.display = config.isShow ? "block" : "none";
-    div.setAttribute("data-id", this.uid);
-    image.className = "krz-object-img";
-    image.src = config.img;
-    if (config.width) image.width = config.width;
-    if (config.height) image.height = config.height;
-    div.style.left = config.x + "px";
-    div.style.top = config.y + "px";
-    div.appendChild(image);
+    let imageVNode = m("img", {
+      class: "krz-object-img",
+      src: config.img,
+      width: config.width,
+      height: config.height,
+    });
+
+    let v = m(
+      "div",
+      {
+        className: className({
+          "krz-object-hide": !config.isShow,
+          "krz-object": true,
+        }),
+        "data-id": this.uid,
+        key: this.uid,
+        style: style({
+          left: config.x + "px",
+          top: config.y + "px",
+        }),
+      },
+      [imageVNode]
+    );
+
+    let div = createElement(v);
+    let image = createElement(imageVNode);
+
     document.querySelector(".krz-object-container").appendChild(div);
 
     this.config = config;
@@ -94,7 +110,7 @@ class krzObject {
     });
 
     this.isShow = true;
-    return (this.element.style.display = "block") && this;
+    return this.element.classList.remove("krz-object-hide") && this;
   }
 
   /**
@@ -107,7 +123,7 @@ class krzObject {
     });
 
     this.isShow = false;
-    return (this.element.style.display = "none") && this;
+    return this.element.classList.add("krz-object-hide") && this;
   }
 
   /**
@@ -324,9 +340,15 @@ export let isShowObjectCover = false;
 export function showObjectCover(text) {
   if (isShowObjectCover || screen.isAnimating) return;
   screen.setStartAnimation();
-  let div = document.createElement("div");
-  div.className = "krz-object-cover";
-  div.innerHTML = `<div class="krz-object-cover-close-tip">${text}</div>`;
+  let v = m("div", { class: "krz-object-cover" }, [
+    m(
+      "div",
+      { class: "krz-object-cover-close-tip" },
+      [text],
+      Flags.ELEMENT_TEXT_CHILDREN
+    ),
+  ]);
+  let div = createElement(v);
   OBJECT_CONTAINER.insertBefore(div, document.querySelector(".krz-object"));
   div.classList.add("krz-animate-fadeIn-200");
   setTimeout(function () {
