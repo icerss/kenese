@@ -172,10 +172,10 @@ guiziopen2.onclick(function () {
 let isClickDidian = false;
 didian.onclick(async function () {
   if (!isClickDidian) {
-    didian.moveTo(null, 760, 0.4);
+    await didian.moveTo(null, 760, 0.4);
     isClickDidian = true;
   } else {
-    didian.moveTo(null, 934, 0.4);
+    await didian.moveTo(null, 934, 0.4);
     isClickDidian = false;
   }
 });

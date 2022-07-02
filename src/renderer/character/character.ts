@@ -9,11 +9,11 @@ interface IGameCharacterConfig {
   /**
    * 角色头像
    */
-  avatar: string;
+  avatar?: string;
   /**
    * 角色皮肤
    */
-  skin: string;
+  skin?: string;
 }
 
 export class gameCharacter {

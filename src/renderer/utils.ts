@@ -1,26 +1,10 @@
-// @ts-ignore
-import Promise from "promise-polyfill";
+import _Promise from "Promise-polyfill";
 import { customAlphabet } from "nanoid";
-import chalk from "chalk";
 
-/**
- * 控制台输出
- */
-function _consoleLog() {
-  let consoleNumber = 0;
-  return () => {
-    consoleNumber++;
-    console.log(
-      chalk.magenta.bgCyanBright.bold(`[INFO]`),
-      ` #${consoleNumber} ->`,
-      ...arguments
-    );
-  };
-}
 /**
  * Debug!!!!
  */
-export const log: (...string: any) => void = _consoleLog();
+export const log = console.log;
 // @ts-ignore
 window["log"] = log;
 
@@ -42,9 +26,9 @@ export function preFetchResources(map: object): Promise<any> {
     // @ts-ignore
     urls.push(map[key]);
   }
-  return Promise.all(
+  return _Promise.all(
     urls.map((img) => {
-      return new Promise((resolve: any) => {
+      return new _Promise((resolve: any) => {
         let i = new Image();
         i.src = img;
         i.addEventListener("load", resolve);

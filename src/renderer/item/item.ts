@@ -25,7 +25,7 @@ export function addToItemBox(KrzObject: KrzObject): void {
   let div = createElement(v);
   ITEM_BOX.appendChild(div);
 
-  addItemClickEvent(<HTMLElement>div);
+  addItemClickEvent(div as HTMLElement);
   KrzObject.remove();
 
   log("添加物品到物品栏", {

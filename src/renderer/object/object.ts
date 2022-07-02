@@ -138,7 +138,9 @@ export class KrzObject {
     let div = createElement(v);
     let image = createElement(imageVNode);
 
-    (document.querySelector(".krz-object-container") as any).appendChild(div);
+    (
+      document.querySelector(".krz-object-container") as HTMLElement
+    ).appendChild(div);
 
     this.config = config;
     this.img = config.img;
@@ -159,6 +161,8 @@ export class KrzObject {
      */
     if (config.description || this.isItem) {
       this.onclick(async () => {
+        if (screen.isAnimating) return;
+
         if (this.isItem) {
           await showObjectGettingHighlight(this);
           addToItemBox(this);
@@ -267,7 +271,7 @@ export class KrzObject {
    * @param {number} y y坐标
    * @param {number} time 时间，单位秒
    */
-  moveTo(x: number, y: number, time: number = 2): Promise<any> {
+  moveTo(x: number | null, y: number | null, time: number = 2): Promise<any> {
     log("物品动画开始", {
       name: this.name || "",
       uid: this.uid,
@@ -276,8 +280,8 @@ export class KrzObject {
     this._isAnimating = true;
     return new _Promise((resolve: any) => {
       this.element.style.transition = `ease-in-out ${time}s`;
-      this.setX(x);
-      this.setY(y);
+      x && this.setX(x);
+      y && this.setY(y);
       setTimeout(() => {
         this.element.style.transition = "unset";
         this._isAnimating = false;

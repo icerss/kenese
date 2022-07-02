@@ -45,15 +45,15 @@ async function translate(target) {
     );
     log(`目标源（${target}.json）`, isTargetFileExisting ? "存在" : "不存在");
 
-    // index.js 是否存在
+    // index.ts 是否存在
     let isJsFileExisting = await checkFileIsExisting(
       path.resolve(__dirname, baseDirPath),
-      "index.js"
+      "index.ts"
     );
     if (!isJsFileExisting) {
-      log("index.js 不存在，自动补全");
+      log("index.ts 不存在，自动补全");
       await fs.writeFile(
-        path.resolve(__dirname, baseDirPath, "index.js"),
+        path.resolve(__dirname, baseDirPath, "index.ts"),
         `import { I18n } from "../../../renderer/i18n/i18n";
 
 // const zh = require("./zh.json");

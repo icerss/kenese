@@ -15,6 +15,7 @@ export function showDialog(text: string): Promise<any> {
   if (document.querySelector(".krz-dialog-words-group")) {
     (document.querySelector(".krz-dialog-text") as HTMLElement).innerHTML = "";
   }
+
   return new _Promise(async (resolve: any) => {
     let textVNode = m("div", { class: "krz-dialog-text", key: text }, []);
     let v = m("div", { class: "krz-dialog-model" }, [
@@ -45,14 +46,12 @@ export function showDialog(text: string): Promise<any> {
         isAnimate: false,
       });
     }
-    setTimeout(() => {
-      (
-        document.querySelector(".krz-dialog-next-icon") as HTMLElement
-      ).style.display = "block";
-      (
-        document.querySelector(".krz-dialog-next-icon") as HTMLElement
-      ).classList.add("krz-animate-flicker");
-    }, 100);
+    (
+      document.querySelector(".krz-dialog-next-icon") as HTMLElement
+    ).style.display = "block";
+    (
+      document.querySelector(".krz-dialog-next-icon") as HTMLElement
+    ).classList.add("krz-animate-flicker");
     (document.querySelector(".krz-dialog-model") as HTMLElement).onclick =
       () => {
         setTimeout(() => {

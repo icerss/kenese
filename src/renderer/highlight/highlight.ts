@@ -47,13 +47,12 @@ export function showObjectGettingHighlight(krzObj: KrzObject) {
  */
 export function showItemHighlight(krzObj: KrzObject) {
   screen.setStartAnimation();
-
   return new _Promise((resolve: any) => {
     let v = m("div", { class: "krz-object-highlight" }, [
       m(
         "div",
         { class: "krz-highlight-name" },
-        [krzObj.name || m("span")],
+        [(krzObj.name && krzObj.name) || m("span")],
         Flags.ELEMENT_TEXT_CHILDREN
       ),
       m("img", { class: "krz-object-img-highlight", src: krzObj.img }),

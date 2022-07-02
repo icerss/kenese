@@ -19,16 +19,16 @@ export async function addFullscreenInfo(text: string) {
     ]);
     render(SCREEN_INFO_CONTAINER, v);
     SCREEN_INFO_CONTAINER.style.display = "flex";
-    text = text.replace(/(，|。|,|\\n)/gi, "$1\n").toString();
-    text = text.split("\n").toString();
-    for (let sentence of text) {
+    text = text.replace(/(，|。|,|\\n)/gi, "$1\n");
+    let texts = text.split("\n");
+    for (let sentence of texts) {
       let box = document.createElement("div");
       box.className = "krz-screen-info-text";
       (
         document.querySelector(".krz-screen-info-words-print") as HTMLElement
       ).appendChild(box);
-      sentence = sentence.split("").toString();
-      for (let item of sentence) {
+      let sentences = sentence.split("");
+      for (let item of sentences) {
         await printSingleText(box, item, {
           waitTime: 50,
         });

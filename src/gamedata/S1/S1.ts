@@ -1,4 +1,4 @@
-import Promise from "promise-polyfill";
+import _Promise from "Promise-polyfill";
 import { screen } from "../../renderer/screen/screen";
 import { Jiekebu } from "../common/character";
 import { $ } from "./i18n";
@@ -13,7 +13,7 @@ import {
 } from "./resources";
 
 export default function S1() {
-  return new Promise(async function (resolve) {
+  return new _Promise(async function (resolve: any) {
     await screen.load(images);
     screen.background(images.bg);
 
