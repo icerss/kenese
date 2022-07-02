@@ -7,7 +7,7 @@ const WebpackObfuscator = require("webpack-obfuscator");
 const webpack = require("webpack");
 
 module.exports = {
-  entry: "./src/renderer/init.js",
+  entry: "./src/renderer/init.ts",
   mode: "development",
   output: {
     path: path.resolve(__dirname, "./dist"),
@@ -34,6 +34,10 @@ module.exports = {
             },
           },
         ],
+      },
+      {
+        test: /\.tsx?$/,
+        loader: "ts-loader",
       },
       {
         test: /\.m?js$/,

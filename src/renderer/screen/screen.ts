@@ -1,14 +1,21 @@
 import "./screen.css";
 import { APP, LOADING_CONTAINER } from "../dom";
-import { placeObject } from "../object/object";
+import { IObjectConfig, placeObject } from "../object/object";
 import debounce from "lodash/debounce";
 import { log, preFetchResources } from "../utils";
 import { showDialog } from "../dialog/dialog";
 import { addFullscreenInfo } from "../screenInfo/screenInfo";
-import Promise from "promise-polyfill";
+import _Promise from "Promise-polyfill";
 import { m, render } from "million";
+import { IKrzObject } from "../object/types";
+import {IScreen} from "./types";
 
 class Screen {
+  private scale: number;
+  isAnimating: boolean;
+  private objects: string[];
+  private backgroundImage: string | undefined;
+
   constructor() {
     this.scale = 1;
     this._handleCanvasSize();
@@ -27,11 +34,11 @@ class Screen {
   _handleCanvasSize() {
     const canvasWidth = 1800;
     const canvasHeight = 1200;
-    const windiwHeight = window.innerHeight;
-    const windiwWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const windowWidth = window.innerWidth;
     this.scale = Math.min(
-      windiwHeight / canvasHeight,
-      windiwWidth / canvasWidth
+      windowHeight / canvasHeight,
+      windowWidth / canvasWidth
     );
     APP.style.height = canvasHeight + "px";
     APP.style.width = canvasWidth + "px";
@@ -39,25 +46,14 @@ class Screen {
 
     log("调整屏幕尺寸", { scale: this.scale });
 
+    // @ts-ignore
     window["_krz_game_scale"] = this.scale;
   }
 
   /**
    * 放置屏幕物品
    */
-  place(
-    config = {
-      x: 0,
-      y: 0,
-      img: "",
-      width: 0,
-      height: 0,
-      name: "",
-      description: "" || [],
-      isShow: true,
-      isItem: false,
-    }
-  ) {
+  place(config: IObjectConfig): IKrzObject {
     return placeObject(config);
   }
 
@@ -65,8 +61,8 @@ class Screen {
    * 更改背景图片
    * @param {string} url 图片地址
    */
-  background(url) {
-    this.backgroungImage = url;
+  background(url: string): void {
+    this.backgroundImage = url;
     APP.style.backgroundImage = `url("${url}")`;
 
     log("设置背景图片");
@@ -75,7 +71,7 @@ class Screen {
   /**
    * 显示加载中画面
    */
-  showLoadingAnimation(text) {
+  showLoadingAnimation(text?: string): void {
     let v = m("div", { class: "krz-loading" }, [
       m("img", {
         class: "krz-loading-img krz-animate-pulse",
@@ -92,7 +88,7 @@ class Screen {
   /**
    * 隐藏加载中画面
    */
-  hideLoadingAnimation() {
+  hideLoadingAnimation(): void {
     LOADING_CONTAINER.innerHTML = "";
     LOADING_CONTAINER.style.display = "none";
 
@@ -102,37 +98,35 @@ class Screen {
   /**
    * 预加载资源
    */
-  load(map) {
-    return new Promise(
-      async function (resolve) {
-        this.showLoadingAnimation();
-        this.setStartAnimation();
-        await preFetchResources(map);
-        this.hideLoadingAnimation();
-        this.setStopAnimation();
-        resolve();
-      }.bind(this)
-    );
+  load(map: object): Promise<any> {
+    return new _Promise(async (resolve: any) => {
+      this.showLoadingAnimation();
+      this.setStartAnimation();
+      await preFetchResources(map);
+      this.hideLoadingAnimation();
+      this.setStopAnimation();
+      resolve();
+    });
   }
 
   /**
    * 展示全屏幕文字信息
    */
-  fullInfo(text) {
+  fullInfo(text: string): void {
     return addFullscreenInfo(text);
   }
 
   /**
    * 展示任务对话对话框
    */
-  dialog(text) {
+  dialog(text: string): void {
     return showDialog(text);
   }
 
   /**
    * 设置处于动画之中
    */
-  setStartAnimation() {
+  setStartAnimation(): any {
     log("开始执行动画，任务挂起");
     return (this.isAnimating = true);
   }
@@ -140,7 +134,7 @@ class Screen {
   /**
    * 设置不处于动画之中
    */
-  setStopAnimation() {
+  setStopAnimation(): any {
     log("结束执行动画，任务继续");
     return (this.isAnimating = false);
   }
@@ -148,16 +142,17 @@ class Screen {
   /**
    * 返回 Scale 值
    */
-  getScale() {
+  getScale(): number {
+    // @ts-ignore
     return window["_krz_game_scale"] || this.scale;
   }
 
   /**
    * this.objects.push(data)
    */
-  pushToObjects(data) {
+  pushToObjects(data: string): any {
     return this.objects.push(data);
   }
 }
 
-export const screen = new Screen();
+export const screen: IScreen = new Screen();

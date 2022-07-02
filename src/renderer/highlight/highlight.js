@@ -1,5 +1,5 @@
 import "./highlight.css";
-import { HIGHTLIGHT_CONTAINER } from "../dom";
+import { HIGHLIGHT_CONTAINER } from "../dom";
 import { log } from "../utils";
 import { screen } from "../screen/screen";
 import Promise from "promise-polyfill";
@@ -22,10 +22,10 @@ export function showObjectGettingHighlight(krzObj) {
       m("div", { class: "krz-highlight-get-tip" }, ["GET!"]),
       m("div", { class: "krz-highlight-close-tip" }, ["点击空白处以继续"]),
     ]);
-    render(HIGHTLIGHT_CONTAINER, v);
-    HIGHTLIGHT_CONTAINER.style.display = "block";
-    HIGHTLIGHT_CONTAINER.addEventListener("click", function () {
-      HIGHTLIGHT_CONTAINER.style.display = "none";
+    render(HIGHLIGHT_CONTAINER, v);
+    HIGHLIGHT_CONTAINER.style.display = "block";
+    HIGHLIGHT_CONTAINER.addEventListener("click", function () {
+      HIGHLIGHT_CONTAINER.style.display = "none";
       // 设置为空白图片
       document.querySelector(".krz-object-img-highlight").src = emptyImage;
       screen.setStopAnimation();
@@ -60,10 +60,10 @@ export function showItemHighlight(krzObj) {
         Flags.ELEMENT_TEXT_CHILDREN
       ),
     ]);
-    render(HIGHTLIGHT_CONTAINER, v);
-    HIGHTLIGHT_CONTAINER.style.display = "block";
-    HIGHTLIGHT_CONTAINER.addEventListener("click", function () {
-      HIGHTLIGHT_CONTAINER.style.display = "none";
+    render(HIGHLIGHT_CONTAINER, v);
+    HIGHLIGHT_CONTAINER.style.display = "block";
+    HIGHLIGHT_CONTAINER.addEventListener("click", function () {
+      HIGHLIGHT_CONTAINER.style.display = "none";
       screen.setStopAnimation();
       resolve();
     });
@@ -79,6 +79,6 @@ export function showItemHighlight(krzObj) {
  * 关闭物品详情页
  */
 export function removeItemHighlight() {
-  HIGHTLIGHT_CONTAINER.style.display = "none";
-  HIGHTLIGHT_CONTAINER.innerHTML = "";
+  HIGHLIGHT_CONTAINER.style.display = "none";
+  HIGHLIGHT_CONTAINER.innerHTML = "";
 }

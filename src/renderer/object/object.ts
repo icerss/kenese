@@ -1,9 +1,9 @@
 import "./object.css";
-import Promise from "promise-polyfill";
+import _Promise from "Promise-polyfill";
 import {
-  showObjectGettingHighlight,
-  showItemHighlight,
   removeItemHighlight,
+  showItemHighlight,
+  showObjectGettingHighlight,
 } from "../highlight/highlight";
 import {
   addToItemBox,
@@ -18,13 +18,26 @@ import {
   ON_CLICK_TARGET_OBJECT,
   ON_HIDE_OBJECT_COVER,
 } from "../eventBus/event";
-import { className, createElement, Flags, m, style } from "million";
+import { className, createElement, Flags, m, style, VNode } from "million";
+import { IKrzObject, IObjectConfig } from "./types";
 
 /**
  * 游戏实例物品初始化
  */
 class krzObject {
-  constructor(config) {
+  public uid: string;
+  public config: IObjectConfig;
+  public img: string;
+  public element: HTMLElement | any;
+  public imageElement: HTMLElement | any;
+  public readonly name: string | undefined;
+  public description: string | Array<string> | undefined;
+  public readonly isItem: boolean | undefined;
+  public _isShow: boolean;
+  public _isAnimating: boolean;
+  public readonly isSelectAsItem: boolean;
+
+  constructor(config: IObjectConfig) {
     this.uid = nanoid(); // 唯一ID
 
     let imageVNode = m("img", {
@@ -54,14 +67,14 @@ class krzObject {
     let div = createElement(v);
     let image = createElement(imageVNode);
 
-    document.querySelector(".krz-object-container").appendChild(div);
+    (document.querySelector(".krz-object-container") as any).appendChild(div);
 
     this.config = config;
     this.img = config.img;
     this.element = div;
     this.imageElement = image;
-    this.isShow = config.isShow || true;
-    this.isAnimating = false;
+    this._isShow = config.isShow || true;
+    this._isAnimating = false;
     this.name = config.name;
     this.description = config.description;
     this.isItem = config.isItem; // 是否可以被获取为物品
@@ -74,24 +87,22 @@ class krzObject {
      * 是否点击时显示高亮
      */
     if (config.description || this.isItem) {
-      this.onclick(
-        async function () {
-          if (this.isItem) {
-            await showObjectGettingHighlight(this);
-            addToItemBox(this);
-          }
+      this.onclick(async () => {
+        if (this.isItem) {
+          await showObjectGettingHighlight(this);
+          addToItemBox(this);
+        }
 
-          if (!config.description) return;
+        if (!config.description) return;
 
-          if (typeof this.description === "object") {
-            for (let str of this.description) {
-              await screen.dialog(str);
-            }
-          } else {
-            await screen.dialog(this.description);
+        if (typeof this.description === "object") {
+          for (let str of this.description) {
+            await screen.dialog(str);
           }
-        }.bind(this)
-      );
+        } else if (typeof this.description === "string") {
+          await screen.dialog(this.description);
+        }
+      });
     }
 
     log("放置物品：", {
@@ -103,39 +114,39 @@ class krzObject {
   /**
    * 显示物件
    */
-  show() {
+  show(): any {
     log("显示物品", {
       name: this.name || "",
       uid: this.uid,
     });
 
-    this.isShow = true;
+    this._isShow = true;
     return this.element.classList.remove("krz-object-hide") && this;
   }
 
   /**
    * 隐藏物件
    */
-  hide() {
+  hide(): any {
     log("隐藏物品", {
       name: this.name || "",
       uid: this.uid,
     });
 
-    this.isShow = false;
+    this._isShow = false;
     return this.element.classList.add("krz-object-hide") && this;
   }
 
   /**
    * 移除物件
    */
-  remove() {
+  remove(): any {
     log("移除物品", {
       name: this.name || "",
       uid: this.uid,
     });
 
-    this.isShow = false;
+    this._isShow = false;
     return this.element.remove() && this;
   }
 
@@ -143,7 +154,7 @@ class krzObject {
    * 设置x坐标
    * @param {number} x x坐标
    */
-  setX(x) {
+  setX(x: number): any {
     return (this.element.style.left = x + "px") && this;
   }
 
@@ -151,7 +162,7 @@ class krzObject {
    * 设置y坐标
    * @param {number} y y坐标
    */
-  setY(y) {
+  setY(y: number): any {
     return (this.element.style.top = y + "px") && this;
   }
 
@@ -159,7 +170,7 @@ class krzObject {
    * 设置图片宽度
    * @param {number} w 宽度
    */
-  setWidth(w) {
+  setWidth(w: number): any {
     return (this.imageElement.width = w) && this;
   }
 
@@ -167,7 +178,7 @@ class krzObject {
    * 设置图片高度
    * @param {number} h 高度
    */
-  setHeight(h) {
+  setHeight(h: number): any {
     return (this.imageElement.height = h) && this;
   }
 
@@ -175,7 +186,7 @@ class krzObject {
    * 设置图片地址
    * @param {string} img 图片地址
    */
-  setImage(img) {
+  setImage(img: string): any {
     return (this.imageElement.src = img) && this;
   }
 
@@ -185,33 +196,28 @@ class krzObject {
    * @param {number} y y坐标
    * @param {number} time 时间，单位秒
    */
-  moveTo(x, y, time = 2) {
+  moveTo(x: number, y: number, time: number = 2): Promise<any> {
     log("物品动画开始", {
       name: this.name || "",
       uid: this.uid,
     });
 
-    this.isAnimating = true;
-    return new Promise(
-      function (resolve) {
-        this.element.style.transition = `ease-in-out ${time}s`;
-        this.setX(x);
-        this.setY(y);
-        setTimeout(
-          function () {
-            this.element.style.transition = "unset";
-            this.isAnimating = false;
-            log("物品动画结束", {
-              name: this.name || "",
-              uid: this.uid,
-            });
+    this._isAnimating = true;
+    return new _Promise((resolve: any) => {
+      this.element.style.transition = `ease-in-out ${time}s`;
+      this.setX(x);
+      this.setY(y);
+      setTimeout(() => {
+        this.element.style.transition = "unset";
+        this._isAnimating = false;
+        log("物品动画结束", {
+          name: this.name || "",
+          uid: this.uid,
+        });
 
-            resolve();
-          }.bind(this),
-          time * 1000
-        );
-      }.bind(this)
-    );
+        resolve();
+      }, time * 1000);
+    });
   }
 
   /**
@@ -219,7 +225,7 @@ class krzObject {
    * @param {number} x x坐标
    * @param {number} y y坐标
    */
-  goTo(x, y) {
+  goTo(x: number, y: number): any {
     this.setX(x);
     this.setY(y);
     return this;
@@ -228,93 +234,86 @@ class krzObject {
   /**
    * 监听点击事件回调
    */
-  onclick(func) {
+  onclick(func: Function): any {
     log("添加监听点击事件", {
       name: this.name || "",
       uid: this.uid,
     });
-    return this.element.addEventListener("click", function (e) {
-      if (screen.isAnimating) return; // 若正处于动画之中，则返回
+    return this.element.addEventListener("click", (e: HTMLElementEventMap) => {
+      if (this._isAnimating) return; // 若正处于动画之中，则返回
       typeof func === "function" && func(e);
     });
   }
 
   /**
-   * 点击时继续（Promise）
+   * 点击时继续（_Promise）
    */
-  clicked() {
-    return new Promise(
-      function (resolve) {
-        log("等待物品被点击", {
-          name: this.name || "",
-          uid: this.uid,
-        });
+  clicked(): Promise<any> {
+    return new _Promise((resolve: any) => {
+      log("等待物品被点击", {
+        name: this.name || "",
+        uid: this.uid,
+      });
 
-        this.onclick(resolve);
-      }.bind(this)
-    );
+      this.onclick(resolve);
+    });
   }
 
   /**
    * 触碰物品时继续（Promise）
    */
-  touch(destObj) {
-    return new Promise(
-      async function (resolve) {
-        log("等待物品执行拖动触碰", {
+  touch(destObj: IKrzObject): any {
+    return new _Promise(async (resolve: any) => {
+      log("等待物品执行拖动触碰", {
+        name: this.name || "",
+        uid: this.uid,
+      });
+
+      addToTouchListener(this, destObj);
+
+      EventBus.$on(ON_CLICK_TARGET_OBJECT, (data: any) => {
+        if (data.uid !== destObj.uid) return;
+        removeToTouchListener(this);
+
+        log("目标物体点击", {
           name: this.name || "",
           uid: this.uid,
         });
-
-        addToTouchListener(this, destObj);
-
-        EventBus.$on(
-          ON_CLICK_TARGET_OBJECT,
-          function (data) {
-            if (data.uid !== destObj.uid) return;
-            removeToTouchListener(this);
-
-            log("目标物体点击", {
-              name: this.name || "",
-              uid: this.uid,
-            });
-            resolve();
-          }.bind(this)
-        );
-      }.bind(this)
-    );
+        resolve();
+      });
+    });
   }
 
   /**
    * 是否显示
    */
-  isShow() {
-    return this.isShow;
+  isShow(): boolean {
+    return this._isShow;
   }
 
   /**
    * 是否正在执行动画
    */
-  isAnimating() {
-    return this.isAnimating;
+  isAnimating(): boolean {
+    return this._isAnimating;
   }
 
   /**
    * 显示物品详情页
    */
-  showInfoHighlight() {
+  showInfoHighlight(): any {
     return showItemHighlight(this);
   }
 
   /**
    * 隐藏物品详情页
    */
-  hideInfoHighlight() {
+  hideInfoHighlight(): any {
     return removeItemHighlight(this);
   }
 }
 
-export function placeObject(config) {
+export function placeObject(config: IObjectConfig): krzObject {
   return new krzObject(config);
 }
 
@@ -322,23 +321,24 @@ export function placeObject(config) {
  * 物品强显示
  * @param {string} uid uid
  */
-export function objectFadeToLight(uid) {
+export function objectFadeToLight(uid: string): any {
   showObjectCover();
-  document
-    .querySelector(`.krz-object[data-id='${uid}']`)
-    .classList.add("krz-object-top");
+  (
+    document.querySelector(`.krz-object[data-id='${uid}']`) as HTMLElement
+  ).classList.add("krz-object-top");
 }
 
 /**
  * 是否已经显示黑幕
  */
-export let isShowObjectCover = false;
+export let isShowObjectCover: boolean = false;
 
 /**
  * 显示黑幕
  */
-export function showObjectCover(text) {
+export function showObjectCover(text?: VNode) {
   if (isShowObjectCover || screen.isAnimating) return;
+  text = text || m("span");
   screen.setStartAnimation();
   let v = m("div", { class: "krz-object-cover" }, [
     m(
@@ -348,7 +348,7 @@ export function showObjectCover(text) {
       Flags.ELEMENT_TEXT_CHILDREN
     ),
   ]);
-  let div = createElement(v);
+  let div = createElement(v) as HTMLElement;
   OBJECT_CONTAINER.insertBefore(div, document.querySelector(".krz-object"));
   div.classList.add("krz-animate-fadeIn-200");
   setTimeout(function () {
@@ -362,8 +362,8 @@ export function showObjectCover(text) {
 /**
  * 隐藏黑幕
  */
-export function hideObjectCover() {
-  const Cover = document.querySelector(".krz-object-cover");
+export function hideObjectCover(): any {
+  const Cover = document.querySelector(".krz-object-cover") as HTMLElement;
   Cover.classList.add("krz-animate-fadeOut-400");
   EventBus.$emit(ON_HIDE_OBJECT_COVER);
   setTimeout(function () {

@@ -1,5 +1,6 @@
+// @ts-ignore
 import Promise from "promise-polyfill";
-import { customAlphabet } from "nanoid";
+import {customAlphabet} from "nanoid";
 import chalk from "chalk";
 
 /**
@@ -19,8 +20,9 @@ function _consoleLog() {
 /**
  * Debug!!!!
  */
-export const log = _consoleLog();
-window.log = log;
+export const log: (...string: any) => void = _consoleLog();
+// @ts-ignore
+window["log"] = log;
 
 console.log(
   "\n %c %c %c The Lost Kenese " + " - ✰ " + "ERSS" + " ✰  %c  \n",
@@ -33,15 +35,16 @@ console.log(
 /**
  * 预加载资源
  */
-export function preFetchResources(map) {
+export function preFetchResources(map: object): Promise<any> {
   log("预加载资源");
   let urls = [];
   for (let key in map) {
+    // @ts-ignore
     urls.push(map[key]);
   }
   return Promise.all(
     urls.map(function (img) {
-      return new Promise(function (resolve) {
+      return new Promise(function (resolve: any) {
         let i = new Image();
         i.src = img;
         i.addEventListener("load", resolve);
@@ -53,7 +56,7 @@ export function preFetchResources(map) {
 /**
  * Nanoid
  */
-export const nanoid = customAlphabet(
+export const nanoid: (size?: number) => string = customAlphabet(
   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
   8
 );
@@ -61,7 +64,7 @@ export const nanoid = customAlphabet(
 /**
  * 看是不是手机（测试中……）
  */
-export function deviceIsPhone() {
+export function deviceIsPhone(): boolean {
   return (
     window.innerWidth <= 480 ||
     /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i.test(
@@ -74,9 +77,9 @@ export function deviceIsPhone() {
  * 获取url参数
  * @param {String} qs 要获取的参数名
  */
-export function getQueryString(qs) {
-  let s = location.href;
-  s = s.replace("?", "?&").split("&");
+export function getQueryString(qs: string): string {
+  let s = location.href as string;
+  s = s.replace("?", "?&").split("&").toString();
   let re = "";
   for (let i = 1; i < s.length; i++) {
     if (s[i].indexOf(qs + "=") == 0) {
@@ -86,36 +89,37 @@ export function getQueryString(qs) {
   return re;
 }
 
-/**
- * 播放音乐
- * @param {string} src 音乐地址
- */
-export class AudioPlayer {
-  constructor(src) {
-    this.audio = new Audio();
-    this.audio.src = src;
-    this.audio.volume = 0.5; // 默认音量
-    this.audio.loop = true; // 默认循环
-  }
-
-  play() {
-    return this.audio.play();
-  }
-
-  pause() {
-    return this.audio.pause();
-  }
-
-  serVolume(n) {
-    return (this.audio.volume = n);
-  }
-}
+// /**
+//  * 播放音乐
+//  * @param {string} src 音乐地址
+//  */
+// export class AudioPlayer {
+//   private audio: HTMLAudioElement;
+//   constructor(src) {
+//     this.audio = new Audio();
+//     this.audio.src = src;
+//     this.audio.volume = 0.5; // 默认音量
+//     this.audio.loop = true; // 默认循环
+//   }
+//
+//   play(): any {
+//     return this.audio.play();
+//   }
+//
+//   pause(): any {
+//     return this.audio.pause();
+//   }
+//
+//   serVolume(n: number): any {
+//     return (this.audio.volume = n);
+//   }
+// }
 
 /**
  * 遍历 object 所有的key
  * @param {object} object 要遍历的object
  */
-export function getObjectKeys(object) {
+export function getObjectKeys(object: object): Array<string> {
   let o = [];
   for (let key in object) o.push(key);
   return o;
@@ -125,8 +129,8 @@ export function getObjectKeys(object) {
  * 渐入
  * @param {HTMLElement} element html
  */
-export function fadeIn(element) {
-  element.style.display = true;
+export function fadeIn(element: HTMLElement): any {
+  element.style.display = "block";
   element.classList.add("krz-animate-fadeIn");
   setTimeout(function () {
     element.classList.remove("krz-animate-fadeIn");
@@ -137,8 +141,8 @@ export function fadeIn(element) {
  * 渐出
  * @param {HTMLElement} element html
  */
-export function fadeOut(element) {
-  element.style.display = true;
+export function fadeOut(element: HTMLElement): any {
+  element.style.display = "block";
   element.classList.add("krz-animate-fadeOut");
   setTimeout(function () {
     element.classList.remove("krz-animate-fadeOut");

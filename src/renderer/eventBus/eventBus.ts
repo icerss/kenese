@@ -1,9 +1,11 @@
 import chalk from "chalk";
+import { IEventBus } from "./types";
 
 /**
  * Event Bus
  */
 class eventBus {
+  private readonly callback: object | any;
   constructor() {
     this.callback = {};
   }
@@ -13,7 +15,7 @@ class eventBus {
    * @param {string} name 时间名
    * @param {function} callback 回调函数
    */
-  $on(name, callback) {
+  $on(name: string, callback: Function) {
     this.callback[name] = this.callback[name] || [];
     this.callback[name].push(callback);
   }
@@ -21,9 +23,8 @@ class eventBus {
   /**
    * 取消订阅事件
    * @param {string} name 时间名
-   * @param {function} callback 回调函数
    */
-  $off(name) {
+  $off(name: string) {
     delete this.callback[name];
   }
 
@@ -32,13 +33,13 @@ class eventBus {
    * @param {string} name 事件名
    * @param {any} data 数据
    */
-  $emit(name, data) {
+  $emit(name: string, data: any) {
     console.log(chalk.bgRedBright.white("[EventBus]"), `${name}: `, data);
     if (!this.callback[name]) return;
-    this.callback[name].forEach(function (func) {
+    this.callback[name].forEach(function (func: Function) {
       func(data);
     });
   }
 }
 
-export const EventBus = new eventBus();
+export const EventBus: IEventBus = new eventBus();
