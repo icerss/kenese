@@ -1,4 +1,4 @@
-import _Promise from "Promise-polyfill";
+import _Promise from "promise-polyfill";
 import { screen } from "../../renderer/Screen";
 import { Jiekebu } from "../common/character";
 import { $ } from "./i18n";

@@ -1,4 +1,4 @@
-import _Promise from "Promise-polyfill";
+import _Promise from "promise-polyfill";
 import { customAlphabet } from "nanoid";
 
 /**
