@@ -1,4 +1,4 @@
-import { screen } from "../../renderer/screen/screen";
+import { screen } from "../../renderer/Screen";
 import { $ } from "./i18n";
 
 export const images = {

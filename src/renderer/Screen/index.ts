@@ -1,11 +1,11 @@
 import "./screen.css";
+import _Promise from "Promise-polyfill";
 import { APP, LOADING_CONTAINER } from "../dom";
-import { KrzObject, KrzObjectConfig, placeObject } from "../object/object";
+import { KrzObject, KrzObjectConfig, placeObject } from "../Object";
 import debounce from "lodash/debounce";
 import { log, preFetchResources } from "../utils";
-import { showDialog } from "../dialog/dialog";
-import { addFullscreenInfo } from "../screenInfo/screenInfo";
-import _Promise from "Promise-polyfill";
+import { showDialog } from "../Dialog";
+import { addFullscreenInfo } from "../ScreenInfo";
 import { m, render } from "million";
 
 class Screen {
@@ -114,7 +114,7 @@ class Screen {
    * 预加载资源
    * @param map {object} 列表
    */
-  load(map: object): Promise<any> {
+  load(map: object): Promise<void> {
     return new _Promise(async (resolve: any) => {
       this.showLoadingAnimation();
       this.setStartAnimation();
@@ -129,7 +129,7 @@ class Screen {
    * 展示全屏幕文字信息
    * @param text {string} 文字
    */
-  fullInfo(text: string): Promise<any> {
+  fullInfo(text: string): Promise<void> {
     return addFullscreenInfo(text);
   }
 
@@ -137,7 +137,7 @@ class Screen {
    * 展示任务对话对话框
    * @param text {string} 文字
    */
-  dialog(text: string): Promise<any> {
+  dialog(text: string): Promise<void> {
     return showDialog(text);
   }
 

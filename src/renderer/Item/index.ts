@@ -7,12 +7,12 @@ import {
   KrzObject,
   objectFadeToLight,
   showObjectCover,
-} from "../object/object";
-import { EventBus } from "../eventBus/eventBus";
+} from "../Object";
+import { EventBus } from "../EventBus";
 import {
   ON_CLICK_TARGET_OBJECT,
   ON_HIDE_OBJECT_COVER,
-} from "../eventBus/event";
+} from "../EventBus/events";
 import { createElement, m } from "million";
 
 /**
@@ -68,7 +68,7 @@ export function removeToTouchListener(fromObj: KrzObject): void {
  * 添加物品栏物品点击事件
  * @param {HTMLElement} element 物品栏 html
  */
-function addItemClickEvent(element: HTMLElement) {
+function addItemClickEvent(element: HTMLElement): void {
   const uid = element.getAttribute("data-id") as string;
   element.onclick = () => {
     if (waitToListerTouch[uid]) {

@@ -4,20 +4,20 @@ import {
   removeItemHighlight,
   showItemHighlight,
   showObjectGettingHighlight,
-} from "../highlight/highlight";
+} from "../Highlight";
 import {
   addToItemBox,
   addToTouchListener,
   removeToTouchListener,
-} from "../item/item";
+} from "../Item";
 import { log, nanoid } from "../utils";
-import { screen } from "../screen/screen";
-import { EventBus } from "../eventBus/eventBus";
+import { screen } from "../Screen";
+import { EventBus } from "../EventBus";
 import { OBJECT_CONTAINER } from "../dom";
 import {
   ON_CLICK_TARGET_OBJECT,
   ON_HIDE_OBJECT_COVER,
-} from "../eventBus/event";
+} from "../EventBus/events";
 import { className, createElement, Flags, m, style, VNode } from "million";
 
 export interface KrzObjectConfig {
@@ -189,7 +189,7 @@ export class KrzObject {
   /**
    * 显示物件
    */
-  show(): any {
+  show(): void {
     log("显示物品", {
       name: this.name || "",
       uid: this.uid,
@@ -202,7 +202,7 @@ export class KrzObject {
   /**
    * 隐藏物件
    */
-  hide(): any {
+  hide(): void {
     log("隐藏物品", {
       name: this.name || "",
       uid: this.uid,
@@ -215,7 +215,7 @@ export class KrzObject {
   /**
    * 移除物件
    */
-  remove(): any {
+  remove(): void {
     log("移除物品", {
       name: this.name || "",
       uid: this.uid,
@@ -271,7 +271,7 @@ export class KrzObject {
    * @param {number} y y坐标
    * @param {number} time 时间，单位秒
    */
-  moveTo(x: number | null, y: number | null, time: number = 2): Promise<any> {
+  moveTo(x: number | null, y: number | null, time: number = 2): Promise<void> {
     log("物品动画开始", {
       name: this.name || "",
       uid: this.uid,
@@ -309,7 +309,7 @@ export class KrzObject {
   /**
    * 监听点击事件回调
    */
-  onclick(func: Function): any {
+  onclick(func: Function): void {
     log("添加监听点击事件", {
       name: this.name || "",
       uid: this.uid,
@@ -323,7 +323,7 @@ export class KrzObject {
   /**
    * 点击时继续（Promise）
    */
-  clicked(): Promise<any> {
+  clicked(): Promise<void> {
     return new _Promise((resolve: any) => {
       log("等待物品被点击", {
         name: this.name || "",
@@ -337,7 +337,7 @@ export class KrzObject {
   /**
    * 触碰物品时继续（Promise）
    */
-  touch(destObj: KrzObject): any {
+  touch(destObj: KrzObject): Promise<void> {
     return new _Promise(async (resolve: any) => {
       log("等待物品执行拖动触碰", {
         name: this.name || "",
@@ -376,14 +376,14 @@ export class KrzObject {
   /**
    * 显示物品详情页
    */
-  showInfoHighlight(): any {
+  showInfoHighlight(): Promise<void> {
     return showItemHighlight(this);
   }
 
   /**
    * 隐藏物品详情页
    */
-  hideInfoHighlight(): any {
+  hideInfoHighlight(): void {
     return removeItemHighlight();
   }
 }
@@ -396,7 +396,7 @@ export function placeObject(config: KrzObjectConfig): KrzObject {
  * 物品强显示
  * @param {string} uid uid
  */
-export function objectFadeToLight(uid: string): any {
+export function objectFadeToLight(uid: string): void {
   showObjectCover();
   (
     document.querySelector(`.krz-object[data-id='${uid}']`) as HTMLElement
@@ -437,7 +437,7 @@ export function showObjectCover(text?: VNode) {
 /**
  * 隐藏黑幕
  */
-export function hideObjectCover(): any {
+export function hideObjectCover(): void {
   const Cover = document.querySelector(".krz-object-cover") as HTMLElement;
   Cover.classList.add("krz-animate-fadeOut-400");
   EventBus.$emit(ON_HIDE_OBJECT_COVER);

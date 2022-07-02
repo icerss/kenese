@@ -1,4 +1,4 @@
-import { screen } from "../screen/screen";
+import { screen } from "../Screen";
 import { nanoid } from "../utils";
 
 interface IGameCharacterConfig {
@@ -32,7 +32,7 @@ export class gameCharacter {
    * 角色展示对话框
    * @param text {string} 对话文字
    */
-  dialog(text: string): Promise<any> {
+  dialog(text: string): Promise<void> {
     return screen.dialog(`${this.name}：${text}`);
   }
 }

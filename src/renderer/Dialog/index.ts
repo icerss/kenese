@@ -1,21 +1,20 @@
-import _Promise from "Promise-polyfill";
 import "./dialog.css";
+import _Promise from "Promise-polyfill";
 import { DIALOG_CONTAINER } from "../dom";
 import { log } from "../utils";
-import { screen } from "../screen/screen";
+import { screen } from "../Screen";
 import { m, render, style } from "million";
 
 /**
  * 人物对话
  * @param text {string} 对话文字
  */
-export function showDialog(text: string): Promise<any> {
+export function showDialog(text: string): Promise<void> {
   log("显示人物对话", { text });
   screen.setStartAnimation();
   if (document.querySelector(".krz-dialog-words-group")) {
     (document.querySelector(".krz-dialog-text") as HTMLElement).innerHTML = "";
   }
-
   return new _Promise(async (resolve: any) => {
     let textVNode = m("div", { class: "krz-dialog-text", key: text }, []);
     let v = m("div", { class: "krz-dialog-model" }, [
@@ -46,12 +45,14 @@ export function showDialog(text: string): Promise<any> {
         isAnimate: false,
       });
     }
-    (
-      document.querySelector(".krz-dialog-next-icon") as HTMLElement
-    ).style.display = "block";
-    (
-      document.querySelector(".krz-dialog-next-icon") as HTMLElement
-    ).classList.add("krz-animate-flicker");
+    setTimeout(() => {
+      (
+        document.querySelector(".krz-dialog-next-icon") as HTMLElement
+      ).style.display = "block";
+      (
+        document.querySelector(".krz-dialog-next-icon") as HTMLElement
+      ).classList.add("krz-animate-flicker");
+    }, 100);
     (document.querySelector(".krz-dialog-model") as HTMLElement).onclick =
       () => {
         setTimeout(() => {
@@ -81,7 +82,7 @@ export function printSingleText(
     waitTime?: number;
     isAnimate?: boolean;
   }
-): Promise<any> {
+): Promise<void> {
   let { waitTime = 20, isAnimate = true } = config || {};
   return new _Promise((resolve) => {
     let div = document.createElement("span");
