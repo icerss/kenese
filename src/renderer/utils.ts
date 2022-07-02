@@ -1,6 +1,6 @@
 // @ts-ignore
 import Promise from "promise-polyfill";
-import {customAlphabet} from "nanoid";
+import { customAlphabet } from "nanoid";
 import chalk from "chalk";
 
 /**
@@ -8,7 +8,7 @@ import chalk from "chalk";
  */
 function _consoleLog() {
   let consoleNumber = 0;
-  return function () {
+  return () => {
     consoleNumber++;
     console.log(
       chalk.magenta.bgCyanBright.bold(`[INFO]`),
@@ -43,8 +43,8 @@ export function preFetchResources(map: object): Promise<any> {
     urls.push(map[key]);
   }
   return Promise.all(
-    urls.map(function (img) {
-      return new Promise(function (resolve: any) {
+    urls.map((img) => {
+      return new Promise((resolve: any) => {
         let i = new Image();
         i.src = img;
         i.addEventListener("load", resolve);
@@ -132,7 +132,7 @@ export function getObjectKeys(object: object): Array<string> {
 export function fadeIn(element: HTMLElement): any {
   element.style.display = "block";
   element.classList.add("krz-animate-fadeIn");
-  setTimeout(function () {
+  setTimeout(() => {
     element.classList.remove("krz-animate-fadeIn");
   }, 700);
 }
@@ -144,7 +144,7 @@ export function fadeIn(element: HTMLElement): any {
 export function fadeOut(element: HTMLElement): any {
   element.style.display = "block";
   element.classList.add("krz-animate-fadeOut");
-  setTimeout(function () {
+  setTimeout(() => {
     element.classList.remove("krz-animate-fadeOut");
     element.style.display = "none";
   }, 500);

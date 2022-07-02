@@ -19,25 +19,96 @@ import {
   ON_HIDE_OBJECT_COVER,
 } from "../eventBus/event";
 import { className, createElement, Flags, m, style, VNode } from "million";
-import { IKrzObject, IObjectConfig } from "./types";
+
+export interface KrzObjectConfig {
+  /**
+   * 物件 X 坐标
+   */
+  x: number;
+  /**
+   * 物件 Y 坐标
+   */
+  y: number;
+  /**
+   * 物件图片地址
+   */
+  img: string;
+  /**
+   * 物件宽度
+   */
+  width?: number;
+  /**
+   * 物件高度
+   */
+  height?: number;
+  /**
+   * 物件名称
+   */
+  name?: string;
+  /**
+   * 物件描述
+   */
+  description?: string | Array<string>;
+  /**
+   * 物件是否显示
+   */
+  isShow?: boolean;
+  /**
+   * 物件是否位物品（是否可以被选取到物品栏）
+   */
+  isItem?: boolean;
+}
 
 /**
  * 游戏实例物品初始化
  */
-class krzObject {
+export class KrzObject {
+  /**
+   * 物件 UID
+   */
   public uid: string;
-  public config: IObjectConfig;
+  /**
+   * 物件配置
+   */
+  public config: KrzObjectConfig;
+  /**
+   * 物件图片地址
+   */
   public img: string;
+  /**
+   * 物件 HTMLElement
+   */
   public element: HTMLElement | any;
+  /**
+   * 物件图片 HTMLElement
+   */
   public imageElement: HTMLElement | any;
+  /**
+   * 物件名称
+   */
   public readonly name: string | undefined;
+  /**
+   * 物件描述
+   */
   public description: string | Array<string> | undefined;
+  /**
+   * 物件是否位物品（可以被选取）
+   */
   public readonly isItem: boolean | undefined;
-  public _isShow: boolean;
-  public _isAnimating: boolean;
+  /**
+   * 物件是否显示
+   */
+  private _isShow: boolean;
+  /**
+   * 物件是否处于动画
+   */
+  private _isAnimating: boolean;
+  /**
+   * 物件是否被选取为物品
+   */
   public readonly isSelectAsItem: boolean;
 
-  constructor(config: IObjectConfig) {
+  constructor(config: KrzObjectConfig) {
     this.uid = nanoid(); // 唯一ID
 
     let imageVNode = m("img", {
@@ -246,7 +317,7 @@ class krzObject {
   }
 
   /**
-   * 点击时继续（_Promise）
+   * 点击时继续（Promise）
    */
   clicked(): Promise<any> {
     return new _Promise((resolve: any) => {
@@ -262,7 +333,7 @@ class krzObject {
   /**
    * 触碰物品时继续（Promise）
    */
-  touch(destObj: IKrzObject): any {
+  touch(destObj: KrzObject): any {
     return new _Promise(async (resolve: any) => {
       log("等待物品执行拖动触碰", {
         name: this.name || "",
@@ -309,12 +380,12 @@ class krzObject {
    * 隐藏物品详情页
    */
   hideInfoHighlight(): any {
-    return removeItemHighlight(this);
+    return removeItemHighlight();
   }
 }
 
-export function placeObject(config: IObjectConfig): krzObject {
-  return new krzObject(config);
+export function placeObject(config: KrzObjectConfig): KrzObject {
+  return new KrzObject(config);
 }
 
 /**
@@ -351,7 +422,7 @@ export function showObjectCover(text?: VNode) {
   let div = createElement(v) as HTMLElement;
   OBJECT_CONTAINER.insertBefore(div, document.querySelector(".krz-object"));
   div.classList.add("krz-animate-fadeIn-200");
-  setTimeout(function () {
+  setTimeout(() => {
     div.classList.remove("krz-animate-fadeIn-200");
   }, 700);
   isShowObjectCover = true;
@@ -366,7 +437,7 @@ export function hideObjectCover(): any {
   const Cover = document.querySelector(".krz-object-cover") as HTMLElement;
   Cover.classList.add("krz-animate-fadeOut-400");
   EventBus.$emit(ON_HIDE_OBJECT_COVER);
-  setTimeout(function () {
+  setTimeout(() => {
     Cover.remove();
     isShowObjectCover = false;
     // 取消全部元素置顶

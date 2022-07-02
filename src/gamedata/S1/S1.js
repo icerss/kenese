@@ -17,8 +17,6 @@ export default function S1() {
     await screen.load(images);
     screen.background(images.bg);
 
-    jieke
-
     await Jiekebu.dialog($.t("DIALOG_1"));
     await Jiekebu.dialog($.t("DIALOG_2"));
     await screen.dialog($.t("MISSION_1"));

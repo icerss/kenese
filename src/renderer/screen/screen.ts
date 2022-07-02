@@ -1,19 +1,32 @@
 import "./screen.css";
 import { APP, LOADING_CONTAINER } from "../dom";
-import { IObjectConfig, placeObject } from "../object/object";
+import { KrzObject, KrzObjectConfig, placeObject } from "../object/object";
 import debounce from "lodash/debounce";
 import { log, preFetchResources } from "../utils";
 import { showDialog } from "../dialog/dialog";
 import { addFullscreenInfo } from "../screenInfo/screenInfo";
 import _Promise from "Promise-polyfill";
 import { m, render } from "million";
-import { IKrzObject } from "../object/types";
-import {IScreen} from "./types";
 
 class Screen {
-  private scale: number;
+  /**
+   * 是否处于动画之中
+   */
   isAnimating: boolean;
+  /**
+   * 伸缩量
+   * @private
+   */
+  private scale: number;
+  /**
+   * 屏幕物件
+   * @private
+   */
   private objects: string[];
+  /**
+   * 背景图片
+   * @private
+   */
   private backgroundImage: string | undefined;
 
   constructor() {
@@ -52,8 +65,9 @@ class Screen {
 
   /**
    * 放置屏幕物品
+   * @param config {KrzObjectConfig} 配置
    */
-  place(config: IObjectConfig): IKrzObject {
+  place(config: KrzObjectConfig): KrzObject {
     return placeObject(config);
   }
 
@@ -70,6 +84,7 @@ class Screen {
 
   /**
    * 显示加载中画面
+   * @param text {string} 文字
    */
   showLoadingAnimation(text?: string): void {
     let v = m("div", { class: "krz-loading" }, [
@@ -97,6 +112,7 @@ class Screen {
 
   /**
    * 预加载资源
+   * @param map {object} 列表
    */
   load(map: object): Promise<any> {
     return new _Promise(async (resolve: any) => {
@@ -111,15 +127,17 @@ class Screen {
 
   /**
    * 展示全屏幕文字信息
+   * @param text {string} 文字
    */
-  fullInfo(text: string): void {
+  fullInfo(text: string): Promise<any> {
     return addFullscreenInfo(text);
   }
 
   /**
    * 展示任务对话对话框
+   * @param text {string} 文字
    */
-  dialog(text: string): void {
+  dialog(text: string): Promise<any> {
     return showDialog(text);
   }
 
@@ -149,10 +167,11 @@ class Screen {
 
   /**
    * this.objects.push(data)
+   * @param data {string} 数据
    */
   pushToObjects(data: string): any {
     return this.objects.push(data);
   }
 }
 
-export const screen: IScreen = new Screen();
+export const screen = new Screen();

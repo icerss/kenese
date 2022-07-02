@@ -2,18 +2,19 @@ import "./highlight.css";
 import { HIGHLIGHT_CONTAINER } from "../dom";
 import { log } from "../utils";
 import { screen } from "../screen/screen";
-import Promise from "promise-polyfill";
+import _Promise from "Promise-polyfill";
 import { Flags, m, render } from "million";
 import { emptyImage } from "../init";
+import { KrzObject } from "../object/object";
 
 /**
  * 获取物品时显示的物品详情页
  */
-export function showObjectGettingHighlight(krzObj) {
+export function showObjectGettingHighlight(krzObj: KrzObject) {
   screen.setStartAnimation();
-  return new Promise(function (resolve) {
+  return new _Promise((resolve: any) => {
     let v = m("div", { class: "krz-object-highlight" }, [
-      m("div", { class: "krz-highlight-name" }, [krzObj.name]),
+      m("div", { class: "krz-highlight-name" }, [krzObj.name || m("span")]),
       m("img", {
         class: "krz-object-img-highlight",
         src: krzObj.img,
@@ -24,10 +25,12 @@ export function showObjectGettingHighlight(krzObj) {
     ]);
     render(HIGHLIGHT_CONTAINER, v);
     HIGHLIGHT_CONTAINER.style.display = "block";
-    HIGHLIGHT_CONTAINER.addEventListener("click", function () {
+    HIGHLIGHT_CONTAINER.addEventListener("click", () => {
       HIGHLIGHT_CONTAINER.style.display = "none";
       // 设置为空白图片
-      document.querySelector(".krz-object-img-highlight").src = emptyImage;
+      (
+        document.querySelector(".krz-object-img-highlight") as HTMLImageElement
+      ).src = emptyImage;
       screen.setStopAnimation();
       resolve();
     });
@@ -42,27 +45,28 @@ export function showObjectGettingHighlight(krzObj) {
 /**
  * 显示物品详情页
  */
-export function showItemHighlight(krzObj) {
+export function showItemHighlight(krzObj: KrzObject) {
   screen.setStartAnimation();
-  return new Promise(function (resolve) {
+
+  return new _Promise((resolve: any) => {
     let v = m("div", { class: "krz-object-highlight" }, [
       m(
         "div",
         { class: "krz-highlight-name" },
-        [krzObj.name],
+        [krzObj.name || m("span")],
         Flags.ELEMENT_TEXT_CHILDREN
       ),
       m("img", { class: "krz-object-img-highlight", src: krzObj.img }),
       m(
         "div",
         { class: "krz-item-highlight-tips" },
-        [krzObj.description],
+        [(krzObj.description && krzObj.description[0]) || m("span")],
         Flags.ELEMENT_TEXT_CHILDREN
       ),
     ]);
     render(HIGHLIGHT_CONTAINER, v);
     HIGHLIGHT_CONTAINER.style.display = "block";
-    HIGHLIGHT_CONTAINER.addEventListener("click", function () {
+    HIGHLIGHT_CONTAINER.addEventListener("click", () => {
       HIGHLIGHT_CONTAINER.style.display = "none";
       screen.setStopAnimation();
       resolve();

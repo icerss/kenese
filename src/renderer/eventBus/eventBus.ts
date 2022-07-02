@@ -1,5 +1,4 @@
 import chalk from "chalk";
-import { IEventBus } from "./types";
 
 /**
  * Event Bus
@@ -33,13 +32,13 @@ class eventBus {
    * @param {string} name 事件名
    * @param {any} data 数据
    */
-  $emit(name: string, data: any) {
+  $emit(name: string, data?: any) {
     console.log(chalk.bgRedBright.white("[EventBus]"), `${name}: `, data);
     if (!this.callback[name]) return;
-    this.callback[name].forEach(function (func: Function) {
+    this.callback[name].forEach((func: Function) => {
       func(data);
     });
   }
 }
 
-export const EventBus: IEventBus = new eventBus();
+export const EventBus = new eventBus();

@@ -1,6 +1,20 @@
 import { screen } from "../screen/screen";
 import { nanoid } from "../utils";
-import {IGameCharacter, IGameCharacterConfig} from "./types";
+
+interface IGameCharacterConfig {
+  /**
+   * 角色名称
+   */
+  name: string;
+  /**
+   * 角色头像
+   */
+  avatar: string;
+  /**
+   * 角色皮肤
+   */
+  skin: string;
+}
 
 export class gameCharacter {
   private uid: string;
@@ -18,11 +32,11 @@ export class gameCharacter {
    * 角色展示对话框
    * @param text {string} 对话文字
    */
-  dialog(text: string): void {
+  dialog(text: string): Promise<any> {
     return screen.dialog(`${this.name}：${text}`);
   }
 }
 
-export function character(config: IGameCharacterConfig): IGameCharacter {
-  return new gameCharacter(config)
+export function character(config: IGameCharacterConfig): gameCharacter {
+  return new gameCharacter(config);
 }

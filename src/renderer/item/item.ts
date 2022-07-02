@@ -4,6 +4,7 @@ import { log } from "../utils";
 import {
   hideObjectCover,
   isShowObjectCover,
+  KrzObject,
   objectFadeToLight,
   showObjectCover,
 } from "../object/object";
@@ -17,19 +18,19 @@ import { createElement, m } from "million";
 /**
  * 添加到物品栏
  */
-export function addToItemBox(krzObj) {
-  let v = m("div", { class: "krz-item", "data-id": krzObj.uid }, [
-    m("img", { class: "krz-item-img", src: krzObj.img }),
+export function addToItemBox(KrzObject: KrzObject): void {
+  let v = m("div", { class: "krz-item", "data-id": KrzObject.uid }, [
+    m("img", { class: "krz-item-img", src: KrzObject.img }),
   ]);
   let div = createElement(v);
   ITEM_BOX.appendChild(div);
 
-  addItemClickEvent(div);
-  krzObj.remove();
+  addItemClickEvent(<HTMLElement>div);
+  KrzObject.remove();
 
   log("添加物品到物品栏", {
-    name: krzObj.name,
-    uid: krzObj.uid,
+    name: KrzObject.name,
+    uid: KrzObject.uid,
   });
 }
 
@@ -37,15 +38,17 @@ export function addToItemBox(krzObj) {
  * 等待检测触碰事件
  * `物品栏 uid`: `要点击的 uid`
  */
-let watiToListerTouch = {};
+let waitToListerTouch: {
+  [key: string]: string;
+} = {};
 
 /**
  * 将物品添加等待触碰事件
- * @param {krzObj} fromObj 待选择的物品
- * @param {krzObj} toObj 目标物品
+ * @param {KrzObject} fromObj 待选择的物品
+ * @param {KrzObject} toObj 目标物品
  */
-export function addToTouchListener(fromObj, toObj) {
-  watiToListerTouch[fromObj.uid] = toObj.uid;
+export function addToTouchListener(fromObj: KrzObject, toObj: KrzObject): void {
+  waitToListerTouch[fromObj.uid] = toObj.uid;
 
   log("添加物品到监听点击列表", {
     name: toObj.name,
@@ -55,36 +58,36 @@ export function addToTouchListener(fromObj, toObj) {
 
 /**
  * 将物品等待触碰事件移除
- * @param {krzObj} fromObj 待选择的物品
+ * @param {KrzObject} fromObj 待选择的物品
  */
-export function removeToTouchListener(fromObj) {
-  delete watiToListerTouch[fromObj.uid];
+export function removeToTouchListener(fromObj: KrzObject): void {
+  delete waitToListerTouch[fromObj.uid];
 }
 
 /**
  * 添加物品栏物品点击事件
  * @param {HTMLElement} element 物品栏 html
  */
-function addItemClickEvent(element) {
-  const uid = element.getAttribute("data-id");
-  element.onclick = function () {
-    if (watiToListerTouch[uid]) {
+function addItemClickEvent(element: HTMLElement) {
+  const uid = element.getAttribute("data-id") as string;
+  element.onclick = () => {
+    if (waitToListerTouch[uid]) {
       showObjectCover("请选择目标物品，或点击空白处关闭");
-      objectFadeToLight(watiToListerTouch[uid]);
+      objectFadeToLight(waitToListerTouch[uid]);
       let targetElement = document.querySelector(
-        `.krz-object[data-id='${watiToListerTouch[uid]}']`
-      );
+        `.krz-object[data-id='${waitToListerTouch[uid]}']`
+      ) as HTMLElement;
       targetElement.classList.add("krz-object-pointer");
-      let onTargetElementClick = function () {
+      let onTargetElementClick = () => {
         if (!isShowObjectCover) return;
         EventBus.$emit(ON_CLICK_TARGET_OBJECT, {
-          uid: watiToListerTouch[uid],
+          uid: waitToListerTouch[uid],
         });
         targetElement.removeEventListener("click", onTargetElementClick);
         hideObjectCover();
       };
       targetElement.addEventListener("click", onTargetElementClick);
-      EventBus.$on(ON_HIDE_OBJECT_COVER, function () {
+      EventBus.$on(ON_HIDE_OBJECT_COVER, () => {
         targetElement.removeEventListener("click", onTargetElementClick);
       });
     } else {
