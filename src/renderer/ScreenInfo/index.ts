@@ -1,5 +1,5 @@
 import "./screenInfo.css";
-import _Promise from "Promise-polyfill";
+import _Promise from "promise-polyfill";
 import { SCREEN_INFO_CONTAINER } from "../dom";
 import { printSingleText } from "../Dialog";
 import { log } from "../utils";

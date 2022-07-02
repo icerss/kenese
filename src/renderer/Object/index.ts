@@ -1,5 +1,5 @@
 import "./object.css";
-import _Promise from "Promise-polyfill";
+import _Promise from "promise-polyfill";
 import {
   removeItemHighlight,
   showItemHighlight,

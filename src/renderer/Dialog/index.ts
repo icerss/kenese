@@ -1,5 +1,5 @@
 import "./dialog.css";
-import _Promise from "Promise-polyfill";
+import _Promise from "promise-polyfill";
 import { DIALOG_CONTAINER } from "../dom";
 import { log } from "../utils";
 import { screen } from "../Screen";

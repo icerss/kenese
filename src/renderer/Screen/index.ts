@@ -1,5 +1,5 @@
 import "./screen.css";
-import _Promise from "Promise-polyfill";
+import _Promise from "promise-polyfill";
 import { APP, LOADING_CONTAINER } from "../dom";
 import { KrzObject, KrzObjectConfig, placeObject } from "../Object";
 import debounce from "lodash/debounce";
