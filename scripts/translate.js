@@ -160,7 +160,7 @@ async function doTranslate(text, target) {
 }
 
 /**
- * 比较两个 object 的键是否一致
+ * 比较两个 Object 的键是否一致
  * @param {object} obj1 object1
  * @param {object} obj2 object2
  * @returns {boolean} 是否相同
@@ -180,7 +180,7 @@ function isObjectSame(obj1, obj2) {
 }
 
 /**
- * 返回两个 object 哪几个键不同
+ * 返回两个 Object 哪几个键不同
  * @param {object} originObj 样本 Object
  * @param {object} targetObj 待比较 Object
  * @returns {array} `targetObj` 中缺少 `originObj` 中的哪几个键

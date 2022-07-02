@@ -1,4 +1,4 @@
-import { character } from "../../renderer/character/character";
+import { character } from "../../renderer/Character";
 import { $ } from "./i18n";
 
 export const Jiekebu = character({

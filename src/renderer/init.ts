@@ -1,7 +1,7 @@
 import "./animate.css";
 import { deviceIsPhone, log } from "./utils";
 import { VERSION_CONTAINER } from "./dom";
-import { screen } from "./screen/screen";
+import { screen } from "./Screen";
 import * as Sentry from "@sentry/browser";
 import { BrowserTracing } from "@sentry/tracing";
 
@@ -12,7 +12,7 @@ const Gamedata = ["S1", "S2"];
 export const emptyImage =
   "data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw==";
 
-async function init(): Promise<any> {
+async function init(): Promise<void> {
   if (deviceIsPhone()) {
     return screen.showLoadingAnimation("请使用电脑访问");
   }

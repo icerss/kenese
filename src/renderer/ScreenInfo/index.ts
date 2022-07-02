@@ -1,16 +1,16 @@
 import "./screenInfo.css";
 import _Promise from "Promise-polyfill";
 import { SCREEN_INFO_CONTAINER } from "../dom";
-import { printSingleText } from "../dialog/dialog";
+import { printSingleText } from "../Dialog";
 import { log } from "../utils";
-import { screen } from "../screen/screen";
+import { screen } from "../Screen";
 import { m, render } from "million";
 
 /**
  * 添加全屏幕字幕
  * @param text {string} 字幕文本
  */
-export async function addFullscreenInfo(text: string) {
+export async function addFullscreenInfo(text: string): Promise<void> {
   log("开始展示全屏幕文字", { text });
   screen.setStartAnimation();
   return new _Promise(async (resolve: any) => {

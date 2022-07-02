@@ -73,34 +73,34 @@ export function getQueryString(qs: string): string {
   return re;
 }
 
-// /**
-//  * 播放音乐
-//  * @param {string} src 音乐地址
-//  */
-// export class AudioPlayer {
-//   private audio: HTMLAudioElement;
-//   constructor(src) {
-//     this.audio = new Audio();
-//     this.audio.src = src;
-//     this.audio.volume = 0.5; // 默认音量
-//     this.audio.loop = true; // 默认循环
-//   }
-//
-//   play(): any {
-//     return this.audio.play();
-//   }
-//
-//   pause(): any {
-//     return this.audio.pause();
-//   }
-//
-//   serVolume(n: number): any {
-//     return (this.audio.volume = n);
-//   }
-// }
+/**
+ * 播放音乐
+ * @param {string} src 音乐地址
+ */
+export class AudioPlayer {
+  private audio: HTMLAudioElement;
+  constructor(src: string) {
+    this.audio = new Audio();
+    this.audio.src = src;
+    this.audio.volume = 0.5; // 默认音量
+    this.audio.loop = true; // 默认循环
+  }
+
+  async play(): Promise<void> {
+    return await this.audio.play();
+  }
+
+  pause(): void {
+    return this.audio.pause();
+  }
+
+  serVolume(n: number): number {
+    return (this.audio.volume = n);
+  }
+}
 
 /**
- * 遍历 object 所有的key
+ * 遍历 Object 所有的key
  * @param {object} object 要遍历的object
  */
 export function getObjectKeys(object: object): Array<string> {
@@ -113,7 +113,7 @@ export function getObjectKeys(object: object): Array<string> {
  * 渐入
  * @param {HTMLElement} element html
  */
-export function fadeIn(element: HTMLElement): any {
+export function fadeIn(element: HTMLElement): void {
   element.style.display = "block";
   element.classList.add("krz-animate-fadeIn");
   setTimeout(() => {
@@ -125,7 +125,7 @@ export function fadeIn(element: HTMLElement): any {
  * 渐出
  * @param {HTMLElement} element html
  */
-export function fadeOut(element: HTMLElement): any {
+export function fadeOut(element: HTMLElement): void {
   element.style.display = "block";
   element.classList.add("krz-animate-fadeOut");
   setTimeout(() => {

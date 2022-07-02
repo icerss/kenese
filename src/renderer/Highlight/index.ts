@@ -1,16 +1,16 @@
 import "./highlight.css";
+import _Promise from "Promise-polyfill";
 import { HIGHLIGHT_CONTAINER } from "../dom";
 import { log } from "../utils";
-import { screen } from "../screen/screen";
-import _Promise from "Promise-polyfill";
+import { screen } from "../Screen";
 import { Flags, m, render } from "million";
 import { emptyImage } from "../init";
-import { KrzObject } from "../object/object";
+import { KrzObject } from "../Object";
 
 /**
  * 获取物品时显示的物品详情页
  */
-export function showObjectGettingHighlight(krzObj: KrzObject) {
+export function showObjectGettingHighlight(krzObj: KrzObject): Promise<void> {
   screen.setStartAnimation();
   return new _Promise((resolve: any) => {
     let v = m("div", { class: "krz-object-highlight" }, [
@@ -45,7 +45,7 @@ export function showObjectGettingHighlight(krzObj: KrzObject) {
 /**
  * 显示物品详情页
  */
-export function showItemHighlight(krzObj: KrzObject) {
+export function showItemHighlight(krzObj: KrzObject): Promise<void> {
   screen.setStartAnimation();
   return new _Promise((resolve: any) => {
     let v = m("div", { class: "krz-object-highlight" }, [
@@ -81,7 +81,7 @@ export function showItemHighlight(krzObj: KrzObject) {
 /**
  * 关闭物品详情页
  */
-export function removeItemHighlight() {
+export function removeItemHighlight(): void {
   HIGHLIGHT_CONTAINER.style.display = "none";
   HIGHLIGHT_CONTAINER.innerHTML = "";
 }
