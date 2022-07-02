@@ -6,7 +6,7 @@ import { screen } from "../Screen";
 import { m, render, style } from "million";
 
 /**
- * 人物对话
+ * 显示人物对话
  * @param text {string} 对话文字
  */
 export function showDialog(text: string): Promise<void> {
