@@ -7,7 +7,7 @@ const WebpackObfuscator = require("webpack-obfuscator");
 const webpack = require("webpack");
 
 module.exports = {
-  entry: "./src/renderer/init.ts",
+  entry: "./src/renderer/init.js",
   mode: "development",
   output: {
     path: path.resolve(__dirname, "./dist"),
@@ -45,7 +45,10 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            plugins: ["@babel/plugin-transform-runtime"],
+            plugins: [
+              "@babel/plugin-syntax-dynamic-import",
+              "@babel/plugin-transform-runtime",
+            ],
           },
         },
       },
@@ -55,7 +58,6 @@ module.exports = {
     runtimeChunk: {
       name: (entrypoint) => `runtime-${entrypoint.name}`,
     },
-    moduleIds: "deterministic",
     chunkIds: "deterministic",
     splitChunks: {
       automaticNameDelimiter: "-",

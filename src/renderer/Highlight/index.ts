@@ -4,8 +4,13 @@ import { HIGHLIGHT_CONTAINER } from "../dom";
 import { log } from "../utils";
 import { screen } from "../Screen";
 import { Flags, m, render } from "million";
-import { emptyImage } from "../init";
 import { KrzObject } from "../Object";
+
+/**
+ * 空白占位符
+ */
+const emptyImage =
+  "data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw==";
 
 /**
  * 获取物品时显示的物品详情页

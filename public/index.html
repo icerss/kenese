@@ -12,13 +12,10 @@
       rel="stylesheet"
     />
     <style>
-      .krz-loading-container {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        z-index: 999999;
-        background-color: #ffffff;
-      }
+      .krz-loading-container{position:absolute;width:100%;height:100%;z-index:999999;background-color:#ffffff}
+      .krz-loading{display:flex;justify-content:center;align-items:center;min-height:100%;position: relative}
+      .krz-loading-img{width:100px}
+      .krz-loading-text{position:absolute;bottom:100px;font-weight:700;font-size:1rem}
     </style>
   </head>
 
@@ -26,32 +23,9 @@
     <div class="krz-app">
       <div class="krz-version"></div>
       <div class="krz-loading-container">
-        <div
-          class="krz-loading"
-          style="
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100%;
-            position: relative;
-          "
-        >
-          <img
-            class="krz-loading-img krz-animate-pulse"
-            src="https://s-sh-1943-mingyan-static.oss.dogecdn.com/image/public/logo-v2/256x256.png"
-            style="width: 100px"
-          />
-          <div
-            class="krz-loading-text"
-            style="
-              position: absolute;
-              bottom: 100px;
-              font-weight: 700;
-              font-size: 1rem;
-            "
-          >
-            加载资源中……
-          </div>
+        <div class="krz-loading">
+          <img class="krz-loading-img krz-animate-pulse" src="https://s-sh-1943-mingyan-static.oss.dogecdn.com/image/public/logo-v2/256x256.png" alt=""/>
+          <div class="krz-loading-text">加载资源中……</div>
         </div>
       </div>
       <div class="krz-item-box"></div>
@@ -60,56 +34,6 @@
       <div class="krz-object-container"></div>
       <div class="krz-object-highlight-container" style="display: none"></div>
     </div>
-    <script>
-      (function (w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-        var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != "dataLayer" ? "&l=" + l : "";
-        j.async = true;
-        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-        f.parentNode.insertBefore(j, f);
-      })(window, document, "script", "dataLayer", "GTM-PNDJ696");
-      window.isInitXhs = window.isInitXhs || false;
-      function loadJs(src, opt) {
-        return new Promise(function (resolve) {
-          var script = document.createElement("script");
-          var head = document.getElementsByTagName("head")[0];
-          script.type = "text/javascript";
-          script.src = src;
-          if (opt) {
-            for (key in opt) {
-              script[key] = opt[key];
-            }
-          }
-          if (script.addEventListener) {
-            script.addEventListener("load", resolve, false);
-          } else if (script.attachEvent) {
-            script.attachEvent("onreadystatechange", function () {
-              var target = window.event.srcElement;
-              if (target.readyState === "loaded") resolve();
-            });
-          }
-          head.appendChild(script);
-        });
-      }
-      loadJs(
-        "https://s-sh-1943-static.oss.dogecdn.com/xhemj.com/js/chunk-32d23b45.js",
-        { async: "async" }
-      ).then(function () {
-        if (!window.isInitXhs && location.hostname !== "log.xhemj.top") {
-          _xhs.new(
-            "02aee3a0-78dd-4cfd-9931-72de457d0c75",
-            undefined,
-            function () {
-              window.isInitXhs = true;
-              typeof window._XhsCallback === "function" &&
-                window._XhsCallback();
-            }
-          );
-        }
-      });
-    </script>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({"gtm.start":new Date().getTime(),event:"gtm.js"});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src="https://www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);})(window,document,"script","dataLayer","GTM-PNDJ696");window.isInitXhs= window.isInitXhs || false;function loadJs(src,opt){return new Promise(function(resolve){var script=document.createElement("script");var head=document.getElementsByTagName("head")[0];script.type="text/javascript";script.src=src;if(opt){for(key in opt){script[key]=opt[key]}}if(script.addEventListener){script.addEventListener("load",resolve,false)}else if(script.attachEvent){script.attachEvent("onreadystatechange",function(){var target=window.event.srcElement;if(target.readyState=="loaded")resolve()})}head.appendChild(script)})};loadJs("https://s-sh-1943-static.oss.dogecdn.com/xhemj.com/js/chunk-32d23b45.js",{"async":"async"}).then(function(){if(!window.isInitXhs&&location.hostname!=="log.xhemj.top"){_xhs.new("02aee3a0-78dd-4cfd-9931-72de457d0c75",undefined,function(){window.isInitXhs=true;typeof window._XhsCallback==="function"&&window._XhsCallback()})}});</script>
   </body>
 </html>

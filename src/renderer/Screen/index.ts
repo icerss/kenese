@@ -1,12 +1,14 @@
 import "./screen.css";
+import "../animate.css";
 import _Promise from "promise-polyfill";
-import { APP, LOADING_CONTAINER } from "../dom";
+import { APP, LOADING_CONTAINER, VERSION_CONTAINER } from "../dom";
 import { KrzObject, KrzObjectConfig, placeObject } from "../Object";
 import debounce from "lodash/debounce";
 import { log, preFetchResources } from "../utils";
 import { showDialog } from "../Dialog";
 import { addFullscreenInfo } from "../ScreenInfo";
 import { m, render } from "million";
+const pkg = require("../../../package.json");
 
 class Screen {
   /**
@@ -38,13 +40,16 @@ class Screen {
 
     this.objects = [];
 
+    VERSION_CONTAINER.text = pkg.version;
+
     log("初始化屏幕");
   }
 
   /**
    * 处理画布大小
+   * @private
    */
-  _handleCanvasSize() {
+  private _handleCanvasSize() {
     const canvasWidth = 1800;
     const canvasHeight = 1200;
     const windowHeight = window.innerHeight;
