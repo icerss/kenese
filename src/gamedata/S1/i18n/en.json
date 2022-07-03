@@ -1,1 +1,23 @@
-{}
+{
+    "DIALOG_1": "Today is another beautiful day!!",
+    "DIALOG_2": "Eh? Why is the door locked?",
+    "DIALOG_3": "The door is open, so get ready to go out.",
+    "DIALOG_4": "This is the end of the beta, please look forward to the final version!!",
+    "MISSION_1": "<red>(task: find the key to open the door)</red>",
+    "OBJ_BIHUA_DES_1": "A mural, it seems that the right side is locked with screws.",
+    "OBJ_BIHUA_DES_2": "<red>See if you can find a screwdriver and open it.</red>",
+    "OBJ_BIHUA_NAME": "mural",
+    "OBJ_DOOR_DES": "The door of the room seems to be tightly closed.",
+    "OBJ_DOOR_NAME": "door",
+    "OBJ_LUOSIDAO_DES_1": "Why is there a screwdriver in the cabinet?",
+    "OBJ_LUOSIDAO_DES_2": "<red>Try clicking the screwdriver and then the mural to loosen the screw.</red>",
+    "OBJ_LUOSIDAO_NAME": "bolt driver",
+    "OBJ_SHIJUAN_DES": "I forgot all the exam questions I had done when I was a child.",
+    "OBJ_SHIJUAN_NAME": "Zero score test paper",
+    "OBJ_SHOUJI_DES": "Who would put the mobile phone under the floor mat??",
+    "OBJ_SHOUJI_NAME": "mobile phone",
+    "OBJ_YAOSHI_DES": "Oh, the key is here!",
+    "OBJ_YAOSHI_NAME": "Key to open the door",
+    "OBJ_ZHENTOU_DES": "The pillow on the bed is very soft and comfortable!",
+    "OBJ_ZHENTOU_NAME": "Sleeping pillow"
+}

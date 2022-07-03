@@ -1,0 +1,23 @@
+{
+    "DIALOG_1": "今日はまたいい日ですね！！",
+    "DIALOG_2": "え？ドアはどうして鍵がかかっているのですか。",
+    "DIALOG_3": "ドアが開いたので、出かける準備をしましょう。",
+    "DIALOG_4": "テスト版はこれで終わりますので、最終版をお楽しみに！！",
+    "MISSION_1": "<red>（タスク：鍵を見つけてドアを開ける）</red>",
+    "OBJ_BIHUA_DES_1": "1枚の壁画は、右側にネジでロックされているようだ。",
+    "OBJ_BIHUA_DES_2": "<red>ドライバーを見つけて開けられるかどうか見てみましょう。</red>",
+    "OBJ_BIHUA_NAME": "壁画",
+    "OBJ_DOOR_DES": "部屋のドアは、しっかり閉まっているようです。",
+    "OBJ_DOOR_NAME": "ドア",
+    "OBJ_LUOSIDAO_DES_1": "なぜ戸棚にドライバーが入っているのですか。",
+    "OBJ_LUOSIDAO_DES_2": "<red>ドライバーをクリックして壁画をクリックしてネジを回してみましょう。</red>",
+    "OBJ_LUOSIDAO_NAME": "スクリュードライバ",
+    "OBJ_SHIJUAN_DES": "子供の頃に作った試験問題は、今ではほとんど忘れてしまった。",
+    "OBJ_SHIJUAN_NAME": "零点答案",
+    "OBJ_SHOUJI_DES": "ところで誰が携帯をマットの下に置くのだろうか？？",
+    "OBJ_SHOUJI_NAME": "携帯電話",
+    "OBJ_YAOSHI_DES": "ああ、鍵はここに置いてあったのか。",
+    "OBJ_YAOSHI_NAME": "ドアを開ける鍵",
+    "OBJ_ZHENTOU_DES": "ベッドの枕、柔らかくて気持ちいい!",
+    "OBJ_ZHENTOU_NAME": "寝る枕"
+}

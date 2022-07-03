@@ -20,6 +20,7 @@
     "dotenv": "^16.0.1",
     "html-webpack-plugin": "^5.5.0",
     "javascript-obfuscator": "^4.0.0",
+    "md5": "^2.3.0",
     "mini-css-extract-plugin": "^2.6.0",
     "optimize-css-assets-webpack-plugin": "^6.0.1",
     "postcss": "^8.4.13",
@@ -33,8 +34,6 @@
     "webpack-obfuscator": "^3.5.1"
   },
   "dependencies": {
-    "@sentry/browser": "^6.19.7",
-    "@sentry/tracing": "^6.19.7",
     "@types/lodash": "^4.14.182",
     "@types/promise-polyfill": "^6.0.4",
     "chalk": "^5.0.1",

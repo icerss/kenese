@@ -2,6 +2,7 @@ require("dotenv").config();
 const fs = require("fs").promises;
 const path = require("path");
 const axios = require("axios");
+const BaiduTranslate = require("./lib/baidu");
 
 const log = console.log;
 const DEEPL_API_KEY = process.env.DEEPL_API_KEY;
@@ -23,6 +24,7 @@ async function translate(target) {
   log(dir);
 
   for (let dirname of dir) {
+    if (dirname === "index.ts") continue;
     log("==========");
     log("开始处理：", dirname);
     const baseDirPath = `../src/gamedata/${dirname}/i18n`;
@@ -145,18 +147,23 @@ async function doTranslate(text, target) {
     return COMMON_TRANSLATE[target][text];
   }
 
-  let targetLang = String(target).toUpperCase();
-  if (targetLang === "EN") targetLang = "EN-US";
+  let targetLang = String(target).toLowerCase();
 
-  let result = await axios.get("https://api-free.deepl.com/v2/translate", {
-    params: {
-      auth_key: DEEPL_API_KEY,
-      text,
-      target_lang: targetLang,
-      source_lang: "ZH",
-    },
+  return await BaiduTranslate.default({
+    text,
+    source_lang: "zh",
+    target_lang: targetLang,
   });
-  return result.text;
+
+  // let result = await axios.get("https://api-free.deepl.com/v2/translate", {
+  //   params: {
+  //     auth_key: DEEPL_API_KEY,
+  //     text,
+  //     target_lang: targetLang,
+  //     source_lang: "ZH",
+  //   },
+  // });
+  // return result.text;
 }
 
 /**
@@ -212,4 +219,4 @@ function compareObjectDifferences(originObj, targetObj) {
   return differences;
 }
 
-translate("en");
+translate("ja");

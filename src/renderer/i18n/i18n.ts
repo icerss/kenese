@@ -7,17 +7,17 @@ function getLanguageCode() {
   return navigator.language.slice(0, 2).toLowerCase();
 }
 
-// @ts-ignore
-window["_krz_game_language_code"] = getLanguageCode();
 export class I18n {
-  private readonly data: {
+  data: {
     [key: string]: {
       [key: string]: string;
     };
   };
-  private languageCode: any;
+  languageCode: any;
   constructor() {
     this.data = {};
+    // @ts-ignore
+    window["_krz_game_language_code"] = getLanguageCode();
     // @ts-ignore
     this.languageCode = window["_krz_game_language_code"];
 
@@ -35,6 +35,7 @@ export class I18n {
       [key: string]: string;
     }
   ) {
+    log("加载翻译文件：", object);
     return (this.data[code] = object);
   }
 

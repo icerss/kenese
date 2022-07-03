@@ -63,11 +63,11 @@ export function deviceIsPhone(): boolean {
  */
 export function getQueryString(qs: string): string {
   let s = location.href as string;
-  s = s.replace("?", "?&").split("&").toString();
+  let s1 = s.replace("?", "?&").split("&");
   let re = "";
-  for (let i = 1; i < s.length; i++) {
-    if (s[i].indexOf(qs + "=") == 0) {
-      re = s[i].replace(qs + "=", "");
+  for (let i = 1; i < s1.length; i++) {
+    if (s1[i].indexOf(qs + "=") == 0) {
+      re = s1[i].replace(qs + "=", "");
     }
   }
   return re;
