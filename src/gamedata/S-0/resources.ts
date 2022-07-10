@@ -1,4 +1,4 @@
-import { AudioPlayer } from "../../renderer/Audio";
+import { playMusic } from "../../renderer/Audio";
 import { screen } from "../../renderer/Screen";
 import { $ } from "./i18n";
 
@@ -32,7 +32,7 @@ export async function Load() {
   await screen.load(music);
   screen.background(images.bg);
 
-  let bgm = new AudioPlayer(music.rain);
+  await playMusic.play(music.rain);
 
   let bihuaopen = screen.place({
     img: images.bihuaopen,
@@ -169,6 +169,5 @@ export async function Load() {
     dooropen,
     luosidao,
     yaoshi,
-    bgm,
   };
 }

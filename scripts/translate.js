@@ -219,4 +219,7 @@ function compareObjectDifferences(originObj, targetObj) {
   return differences;
 }
 
-translate("en");
+(async () => {
+  await translate("en");
+  await translate("ja");
+})();

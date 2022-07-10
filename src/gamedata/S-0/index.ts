@@ -6,10 +6,8 @@ import { Load } from "./resources";
 
 export default function S_1() {
   return new _Promise(async function (resolve: any) {
-    const { bihua, bihuaopen, doorclose, dooropen, luosidao, yaoshi, bgm } =
+    const { bihua, bihuaopen, doorclose, dooropen, luosidao, yaoshi } =
       await Load();
-
-    await bgm.play();
 
     await Jiekebu.dialog($.t("DIALOG_1"));
     await Jiekebu.dialog($.t("DIALOG_2"));

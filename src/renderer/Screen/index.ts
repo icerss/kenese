@@ -145,7 +145,7 @@ class Screen {
         LOADING_CONTAINER.style.display = "none";
         LOADING_CONTAINER.innerHTML = ``;
         resolve();
-      }, 1400);
+      }, 1300);
 
       log("隐藏加载中页面");
     });

@@ -4,8 +4,9 @@
   "main": "index.html",
   "window": {
     "title": "Kenese Demo",
-    "toolbar": false,
+    "toolbar": true,
     "resizable": false,
-    "icon": "./logo.png"
+    "icon": "./logo.png",
+    "fullscreen": true
   }
 }

@@ -2,10 +2,10 @@ import _Promise from "promise-polyfill";
 import { log } from "../renderer/utils";
 
 const GameData = [
+  "S-Tips",
   "S-Home",
   "S-Menu",
-  "S-0",
-  // "S-1",
+  // "S-0",
 ];
 
 export async function LoadGame(name: string): Promise<any> {
