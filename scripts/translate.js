@@ -219,4 +219,4 @@ function compareObjectDifferences(originObj, targetObj) {
   return differences;
 }
 
-translate("ja");
+translate("en");

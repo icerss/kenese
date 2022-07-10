@@ -34,7 +34,7 @@ img {
   width: 100%;
   height: 100%;
   z-index: 999999;
-  background-color: #ffffff;
+  background-color: #000;
 }
 
 .krz-loading {
@@ -43,6 +43,7 @@ img {
   align-items: center;
   min-height: 100%;
   position: relative;
+  background-image: url("https://s-sh-1943-mingyan-static.oss.dogecdn.com/kenese/test/QQ%E5%9B%BE%E7%89%8720220710153301%20(1).jpg");
 }
 
 .krz-loading-img {
@@ -54,6 +55,9 @@ img {
   bottom: 200px;
   font-weight: 700;
   font-size: 2rem;
+  color: #fff;
+  right: 115px;
+  bottom: 90px;
 }
 
 .krz-version {

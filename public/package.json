@@ -1,0 +1,11 @@
+{
+  "name": "kenese-demo",
+  "version": "0.1.0-beta8",
+  "main": "index.html",
+  "window": {
+    "title": "Kenese Demo",
+    "toolbar": false,
+    "resizable": false,
+    "icon": "./logo.png"
+  }
+}

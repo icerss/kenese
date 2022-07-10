@@ -77,9 +77,9 @@ function Translate(config) {
     });
 }
 exports["default"] = Translate;
-Translate({
-    text: "你好",
-    target_lang: "ja"
-}).then(function (res) {
-    console.log(res);
-});
+// Translate({
+//   text: "你好",
+//   target_lang: "ja",
+// }).then((res) => {
+//   console.log(res);
+// });

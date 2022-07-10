@@ -1,13 +1,21 @@
 import "./screen.css";
 import "../animate.css";
 import _Promise from "promise-polyfill";
-import { APP, LOADING_CONTAINER, VERSION_CONTAINER } from "../dom";
+import {
+  APP,
+  ITEM_BOX,
+  LOADING_CONTAINER,
+  OBJECT_CONTAINER,
+  VERSION_CONTAINER,
+} from "../dom";
 import { KrzObject, KrzObjectConfig, placeObject } from "../Object";
 import debounce from "lodash/debounce";
 import { log, preFetchResources } from "../utils";
 import { showDialog } from "../Dialog";
 import { addFullscreenInfo } from "../ScreenInfo";
 import { m, render } from "million";
+import { KrzButtonConfig, placeText } from "../Button";
+import { $ } from "../../gamedata/common/i18n";
 const pkg = require("../../../package.json");
 
 class Screen {
@@ -31,6 +39,12 @@ class Screen {
    */
   private backgroundImage: string | undefined;
 
+  /**
+   * 是否关闭物品栏
+   * @private
+   */
+  private isCloseItemBox: boolean;
+
   constructor() {
     this.scale = 1;
     this._handleCanvasSize();
@@ -39,6 +53,8 @@ class Screen {
     this.isAnimating = false; // 是否正处于动画或对话框任务中
 
     this.objects = [];
+
+    this.isCloseItemBox = false;
 
     VERSION_CONTAINER.text = pkg.version;
 
@@ -77,6 +93,14 @@ class Screen {
   }
 
   /**
+   * 放置屏幕按钮
+   * @param config {KrzObjectConfig} 配置
+   */
+  placeText(config: KrzButtonConfig): KrzObject {
+    return placeText(config);
+  }
+
+  /**
    * 更改背景图片
    * @param {string} url 图片地址
    */
@@ -91,28 +115,40 @@ class Screen {
    * 显示加载中画面
    * @param text {string} 文字
    */
-  showLoadingAnimation(text?: string): void {
-    let v = m("div", { class: "krz-loading" }, [
-      m("img", {
-        class: "krz-loading-img krz-animate-pulse",
-        src: "https://s-sh-1943-mingyan-static.oss.dogecdn.com/image/public/logo-v2/256x256.png",
-      }),
-      m("div", { class: "krz-loading-text" }, [text ? text : "加载资源中……"]),
-    ]);
-    render(LOADING_CONTAINER, v);
-    LOADING_CONTAINER.style.display = "block";
+  showLoadingAnimation(text?: string): Promise<any> {
+    return new Promise(function (resolve: any) {
+      LOADING_CONTAINER.style.display = "block";
+      LOADING_CONTAINER.innerHTML = `
+<div class="krz-loading">
+  <div class="krz-loading-text">${text || $.t("LOADING_RESOURCE")}</div>
+</div>`;
+      LOADING_CONTAINER.classList.remove("krz-animate-fadeOut-1500");
+      LOADING_CONTAINER.classList.add("krz-animate-fadeIn-1500");
 
-    log("显示加载中页面");
+      setTimeout(resolve, 1500);
+
+      log("显示加载中页面");
+    });
   }
 
   /**
    * 隐藏加载中画面
    */
-  hideLoadingAnimation(): void {
-    LOADING_CONTAINER.innerHTML = "";
-    LOADING_CONTAINER.style.display = "none";
+  hideLoadingAnimation(): Promise<any> {
+    return new Promise(function (resolve: any) {
+      LOADING_CONTAINER.style.display = "block";
+      LOADING_CONTAINER.innerHTML = `<div class="krz-loading"></div>`;
+      LOADING_CONTAINER.classList.remove("krz-animate-fadeIn-1500");
+      LOADING_CONTAINER.classList.add("krz-animate-fadeOut-1500");
+      setTimeout(() => {
+        LOADING_CONTAINER.classList.remove("krz-animate-fadeOut-1500");
+        LOADING_CONTAINER.style.display = "none";
+        LOADING_CONTAINER.innerHTML = ``;
+        resolve();
+      }, 1400);
 
-    log("隐藏加载中页面");
+      log("隐藏加载中页面");
+    });
   }
 
   /**
@@ -120,11 +156,10 @@ class Screen {
    * @param map {object} 列表
    */
   load(map: object): Promise<void> {
+    log("预加载资源", map);
     return new _Promise(async (resolve: any) => {
-      this.showLoadingAnimation();
       this.setStartAnimation();
       await preFetchResources(map);
-      this.hideLoadingAnimation();
       this.setStopAnimation();
       resolve();
     });
@@ -177,6 +212,36 @@ class Screen {
   pushToObjects(data: string): any {
     return this.objects.push(data);
   }
+
+  /**
+   * 关闭物品栏
+   */
+  closeItemBox(): void {
+    this.isCloseItemBox = true;
+    ITEM_BOX.style.display = "none";
+    log("关闭物品栏");
+  }
+
+  /**
+   * 显示物品栏
+   */
+  showItemBox(): void {
+    this.isCloseItemBox = false;
+    ITEM_BOX.style.display = "flex";
+    log("显示物品栏");
+  }
+
+  /**
+   * 转到默认
+   */
+  toDefaultConfig(): void {
+    this.showItemBox();
+    OBJECT_CONTAINER.innerHTML = "";
+    log("转到默认配置");
+  }
 }
 
 export const screen = new Screen();
+
+// @ts-ignore
+window["gameScreen"] = screen;

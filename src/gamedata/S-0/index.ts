@@ -2,20 +2,14 @@ import _Promise from "promise-polyfill";
 import { screen } from "../../renderer/Screen";
 import { Jiekebu } from "../common/character";
 import { $ } from "./i18n";
-import {
-  bihua,
-  bihuaopen,
-  doorclose,
-  dooropen,
-  images,
-  luosidao,
-  yaoshi,
-} from "./resources";
+import { Load } from "./resources";
 
-export default function S1() {
+export default function S_1() {
   return new _Promise(async function (resolve: any) {
-    await screen.load(images);
-    screen.background(images.bg);
+    const { bihua, bihuaopen, doorclose, dooropen, luosidao, yaoshi, bgm } =
+      await Load();
+
+    await bgm.play();
 
     await Jiekebu.dialog($.t("DIALOG_1"));
     await Jiekebu.dialog($.t("DIALOG_2"));

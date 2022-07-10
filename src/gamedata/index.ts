@@ -1,8 +1,21 @@
-const GameData = ["S1", "S2"];
+import _Promise from "promise-polyfill";
+import { log } from "../renderer/utils";
+
+const GameData = [
+  "S-Home",
+  "S-Menu",
+  "S-0",
+  // "S-1",
+];
+
+export async function LoadGame(name: string): Promise<any> {
+  log(`开始加载模块：${name}`);
+  let game = await import(`./${name}`);
+  return game.default();
+}
 
 export default async (): Promise<any> => {
   for (let item of GameData) {
-    let game = await import(`./${item}`);
-    await game.default();
+    await LoadGame(item);
   }
 };

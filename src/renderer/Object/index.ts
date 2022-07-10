@@ -32,7 +32,21 @@ export interface KrzObjectConfig {
   /**
    * 物件图片地址
    */
-  img: string;
+  img?: string;
+  /**
+   * 若为按钮
+   * 按钮文字
+   */
+  buttonText?: string;
+  /**
+   * 按钮字体大小
+   */
+  buttonFontSize?: string;
+  /**
+   * 若为按钮
+   * 按钮字体颜色
+   */
+  buttonColor?: string;
   /**
    * 物件宽度
    */
@@ -76,6 +90,21 @@ export class KrzObject {
    */
   public img: string;
   /**
+   * 若为按钮
+   * 按钮文字
+   */
+  public buttonText: string;
+  /**
+   * 若为按钮
+   * 按钮字体大小
+   */
+  public buttonFontSize: string;
+  /**
+   * 若为按钮
+   * 按钮字体颜色
+   */
+  public buttonColor: string;
+  /**
    * 物件 HTMLElement
    */
   public element: HTMLElement | any;
@@ -99,10 +128,7 @@ export class KrzObject {
    * 物件是否显示
    */
   private _isShow: boolean;
-  /**
-   * 物件是否处于动画
-   */
-  private _isAnimating: boolean;
+
   /**
    * 物件是否被选取为物品
    */
@@ -111,12 +137,41 @@ export class KrzObject {
   constructor(config: KrzObjectConfig) {
     this.uid = nanoid(); // 唯一ID
 
-    let imageVNode = m("img", {
-      class: "krz-object-img",
-      src: config.img,
-      width: config.width,
-      height: config.height,
-    });
+    this.config = config;
+    this.img = config.img || "";
+    this.buttonText = config.buttonText || "";
+    this.buttonFontSize = config.buttonFontSize || "";
+    this.buttonColor = config.buttonColor || "";
+    this._isShow = config.isShow || true;
+    this.name = config.name;
+    this.description = config.description;
+    this.isItem = config.isItem; // 是否可以被获取为物品
+
+    this.isSelectAsItem = false; // 是否已经被选取作为物品
+
+    let contentVNoe = m("");
+    if (this.img) {
+      contentVNoe = m("img", {
+        class: "krz-object-img",
+        src: config.img,
+        width: config.width,
+        height: config.height,
+      });
+    } else if (this.buttonText && this.buttonFontSize) {
+      contentVNoe = m(
+        "div",
+        {
+          class: "krz-button-text",
+          width: config.width,
+          height: config.height,
+          style: style({
+            "font-size": this.buttonFontSize,
+            color: this.buttonColor,
+          }),
+        },
+        [this.buttonText]
+      );
+    }
 
     let v = m(
       "div",
@@ -132,28 +187,18 @@ export class KrzObject {
           top: config.y + "px",
         }),
       },
-      [imageVNode]
+      [contentVNoe]
     );
 
     let div = createElement(v);
-    let image = createElement(imageVNode);
+    let image = createElement(contentVNoe);
 
     (
       document.querySelector(".krz-object-container") as HTMLElement
     ).appendChild(div);
 
-    this.config = config;
-    this.img = config.img;
     this.element = div;
     this.imageElement = image;
-    this._isShow = config.isShow || true;
-    this._isAnimating = false;
-    this.name = config.name;
-    this.description = config.description;
-    this.isItem = config.isItem; // 是否可以被获取为物品
-
-    this.isSelectAsItem = false; // 是否已经被选取作为物品
-
     screen.pushToObjects(this.uid);
 
     /**
@@ -277,14 +322,14 @@ export class KrzObject {
       uid: this.uid,
     });
 
-    this._isAnimating = true;
+    screen.setStartAnimation();
     return new _Promise((resolve: any) => {
       this.element.style.transition = `ease-in-out ${time}s`;
       x && this.setX(x);
       y && this.setY(y);
       setTimeout(() => {
         this.element.style.transition = "unset";
-        this._isAnimating = false;
+        screen.setStopAnimation();
         log("物品动画结束", {
           name: this.name || "",
           uid: this.uid,
@@ -315,7 +360,7 @@ export class KrzObject {
       uid: this.uid,
     });
     return this.element.addEventListener("click", (e: HTMLElementEventMap) => {
-      if (this._isAnimating) return; // 若正处于动画之中，则返回
+      if (screen.isAnimating) return; // 若正处于动画之中，则返回
       typeof func === "function" && func(e);
     });
   }
@@ -364,13 +409,6 @@ export class KrzObject {
    */
   isShow(): boolean {
     return this._isShow;
-  }
-
-  /**
-   * 是否正在执行动画
-   */
-  isAnimating(): boolean {
-    return this._isAnimating;
   }
 
   /**

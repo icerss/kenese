@@ -23,6 +23,11 @@
   animation-duration: 0.4s;
 }
 
+.krz-animate-fadeIn-1500 {
+  animation-name: fadeIn;
+  animation-duration: 1.5s;
+}
+
 @keyframes fadeOut {
   from {
     opacity: 1;
@@ -46,6 +51,11 @@
 .krz-animate-fadeOut-400 {
   animation-name: fadeOut;
   animation-duration: 0.4s;
+}
+
+.krz-animate-fadeOut-1500 {
+  animation-name: fadeOut;
+  animation-duration: 1.5s;
 }
 
 @keyframes pulse {

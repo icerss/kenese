@@ -3,6 +3,7 @@ import { customAlphabet } from "nanoid";
 
 /**
  * Debug!!!!
+ * 控制台输出
  */
 export const log = console.log;
 // @ts-ignore
@@ -26,13 +27,22 @@ export function preFetchResources(map: object): Promise<any> {
     // @ts-ignore
     urls.push(map[key]);
   }
+  let musicExtension = ["m4a", "mp3", "ogg", "wav"];
   return _Promise.all(
     urls.map((img) => {
-      return new _Promise((resolve: any) => {
-        let i = new Image();
-        i.src = img;
-        i.addEventListener("load", resolve);
-      });
+      if (musicExtension.includes(img.split(".").pop())) {
+        return new _Promise((resolve: any) => {
+          let audio = new Audio();
+          audio.src = img;
+          audio.oncanplaythrough = resolve;
+        });
+      } else {
+        return new _Promise((resolve: any) => {
+          let i = new Image();
+          i.src = img;
+          i.addEventListener("load", resolve);
+        });
+      }
     })
   );
 }
@@ -71,32 +81,6 @@ export function getQueryString(qs: string): string {
     }
   }
   return re;
-}
-
-/**
- * 播放音乐
- * @param {string} src 音乐地址
- */
-export class AudioPlayer {
-  private audio: HTMLAudioElement;
-  constructor(src: string) {
-    this.audio = new Audio();
-    this.audio.src = src;
-    this.audio.volume = 0.5; // 默认音量
-    this.audio.loop = true; // 默认循环
-  }
-
-  async play(): Promise<void> {
-    return await this.audio.play();
-  }
-
-  pause(): void {
-    return this.audio.pause();
-  }
-
-  serVolume(n: number): number {
-    return (this.audio.volume = n);
-  }
 }
 
 /**
